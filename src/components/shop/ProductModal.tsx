@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { X, ShoppingBag, MessageCircle, CheckCircle2, Sparkles, ShieldCheck, Plus, Minus } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, ShoppingBag, MessageCircle, CheckCircle2, Sparkles, ShieldCheck, Plus, Minus, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 import { liveProducts } from '../../data/products';
 
 interface ProductModalProps {
@@ -14,10 +15,18 @@ interface ProductModalProps {
 export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onSelectProduct }) => {
   const { lang, t } = useLanguage();
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const [quantity, setQuantity] = useState(1);
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>(
     product?.variants?.[0]
   );
+
+  useEffect(() => {
+    setActiveImgIndex(0);
+    setQuantity(1);
+    setSelectedVariant(product?.variants?.[0]);
+  }, [product?.sku]);
 
   if (!product) return null;
 
@@ -46,6 +55,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
     return `https://wa.me/2349044943580?text=${encodeURIComponent(message)}`;
   };
 
+  const isFavorite = isInWishlist(product.sku);
+  const gallery = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  const prevImage = () => {
+    setActiveImgIndex((prev) => (prev === 0 ? gallery.length - 1 : prev - 1));
+  };
+
+  const nextImage = () => {
+    setActiveImgIndex((prev) => (prev === gallery.length - 1 ? 0 : prev + 1));
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-proxima-black/70 backdrop-blur-sm overflow-y-auto animate-fadeIn">
       <div
@@ -63,28 +83,83 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
             <MessageCircle className="w-4 h-4 text-emerald-400" />
             <span className="font-medium truncate">{t.productDetail.needHelp}</span>
           </a>
-          <button
-            onClick={onClose}
-            className="p-1 rounded-full text-proxima-cream/80 hover:text-white hover:bg-proxima-brown transition-colors"
-            aria-label="Close modal"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => toggleWishlist(product.sku)}
+              className="p-1 rounded-full text-proxima-cream/80 hover:text-white hover:bg-proxima-brown transition-colors cursor-pointer"
+              aria-label="Toggle favorite"
+              title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
+            >
+              <Heart className={`w-5 h-5 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-1 rounded-full text-proxima-cream/80 hover:text-white hover:bg-proxima-brown transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left: Product Visual */}
+          {/* Left: Product Visual Gallery */}
           <div className="flex flex-col">
-            <div className="relative aspect-[4/5] bg-gradient-to-b from-proxima-cream/50 to-proxima-cream rounded-2xl p-6 flex items-center justify-center border border-proxima-brown-light/20 shadow-inner">
+            {/* Main Image Box */}
+            <div className="relative aspect-square sm:aspect-[4/5] bg-[#FAF7F2] rounded-2xl p-6 flex items-center justify-center border border-proxima-brown-light/20 shadow-inner overflow-hidden">
               <img
-                src={product.image}
-                alt={displayName}
-                className="w-full h-full object-contain"
+                src={gallery[activeImgIndex]}
+                alt={`${displayName} - View ${activeImgIndex + 1}`}
+                className="w-full h-full object-contain transition-all duration-300"
               />
-              <span className="absolute top-4 right-4 bg-white/90 text-proxima-brown-deep text-xs font-semibold px-2.5 py-1 rounded-md border border-proxima-brown-light/30">
+              <span className="absolute top-4 right-4 bg-white/90 text-proxima-brown-deep text-xs font-semibold px-2.5 py-1 rounded-md border border-proxima-brown-light/30 shadow-xs">
                 {product.size}
               </span>
+
+              {/* Navigation arrows if multiple images */}
+              {gallery.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={prevImage}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409] hover:bg-white transition-all shadow-xs cursor-pointer"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextImage}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409] hover:bg-white transition-all shadow-xs cursor-pointer"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </>
+              )}
             </div>
+
+            {/* Thumbnail Selector Row */}
+            {gallery.length > 1 && (
+              <div className="mt-3 flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
+                {gallery.map((imgUrl, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setActiveImgIndex(idx)}
+                    className={`w-14 h-14 rounded-xl p-1 bg-white border-2 transition-all flex-shrink-0 cursor-pointer overflow-hidden flex items-center justify-center ${
+                      activeImgIndex === idx
+                        ? 'border-[#A32B1E] shadow-sm scale-105'
+                        : 'border-[#E8DFC8]/70 opacity-70 hover:opacity-100 hover:border-[#251409]'
+                    }`}
+                    aria-label={`View image ${idx + 1}`}
+                  >
+                    <img src={imgUrl} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-contain" />
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Why Proxima Trust Pillars (per spec template) */}
             <div className="mt-6 bg-proxima-cream/60 border border-proxima-brown-light/20 rounded-2xl p-4 space-y-2.5">
@@ -234,10 +309,25 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
                 {/* Add to Bag CTA */}
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 bg-proxima-brown hover:bg-proxima-red text-white py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors"
+                  className="flex-1 bg-proxima-brown hover:bg-proxima-red text-white py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>{t.productDetail.addToCart} — ₦{(product.retailPriceNgn * quantity).toLocaleString()}</span>
+                </button>
+
+                {/* Wishlist Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => toggleWishlist(product.sku)}
+                  className={`p-3 rounded-xl border transition-all flex items-center justify-center cursor-pointer ${
+                    isFavorite
+                      ? 'bg-[#A32B1E]/10 border-[#A32B1E] text-[#A32B1E]'
+                      : 'bg-[#FAF7F2] border-[#E8DFC8] text-[#251409]/70 hover:border-[#A32B1E] hover:text-[#A32B1E]'
+                  }`}
+                  title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
+                  aria-label="Wishlist"
+                >
+                  <Heart className={`w-5 h-5 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
                 </button>
               </div>
 

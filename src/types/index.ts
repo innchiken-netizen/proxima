@@ -17,6 +17,7 @@ export interface Product {
   caseQty: number;
   status: 'clean image available' | 'no image yet' | 'excluded';
   image: string;
+  images?: string[];
   keyActives: string[];
   colorLine?: 'pink' | 'brown' | 'green' | 'specialty';
   colorLabel?: string;

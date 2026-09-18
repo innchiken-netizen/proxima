@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, MessageCircle, Filter } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useWishlist } from '../context/WishlistContext';
 import { liveProducts } from '../data/products';
 import { ProductCard } from '../components/shop/ProductCard';
 import { Product } from '../types';
@@ -12,6 +13,7 @@ interface ShopPageProps {
 
 export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }) => {
   const { lang, t } = useLanguage();
+  const { wishlistCount, isInWishlist } = useWishlist();
   const [activeFilter, setActiveFilter] = useState<string>('All');
 
   const isFrench = lang === 'fr';
@@ -57,6 +59,9 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
 
   const filterOptions = [
     { id: 'All', label: isFrench ? 'Tous les produits (17)' : 'All Products (17)' },
+    ...(wishlistCount > 0
+      ? [{ id: 'favorites', label: isFrench ? `♥ Mes Favoris (${wishlistCount})` : `♥ My Favorites (${wishlistCount})` }]
+      : []),
     { id: 'pink', label: isFrench ? 'Ligne Rose (5)' : 'Pink Line (5)' },
     { id: 'brown', label: isFrench ? 'Ligne Marron (5)' : 'Brown Line (5)' },
     { id: 'green', label: isFrench ? 'Ligne Verte (5)' : 'Green Line (5)' },
@@ -68,6 +73,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
 
   const filteredProducts = liveProducts.filter(p => {
     if (activeFilter === 'All') return true;
+    if (activeFilter === 'favorites') return isInWishlist(p.sku);
     if (activeFilter === 'pink') return p.colorLine === 'pink';
     if (activeFilter === 'brown') return p.colorLine === 'brown';
     if (activeFilter === 'green') return p.colorLine === 'green';

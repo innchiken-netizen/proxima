@@ -14,7 +14,8 @@ const products = [
     retailPriceNgn: 7750,
     casePriceNgn: 75000,
     caseQty: 12,
-    image: '/images/product-body-lotion.jpg',
+    image: '/images/proxima-lotion-pink.jpg',
+    images: ['/images/proxima-lotion-pink.jpg', '/images/lifestyle-glow.jpg', '/images/proxima-packaging-angle.jpg'],
     keyActives: ['Retinol', 'Vitamin C'],
     benefit: 'Smoothing antioxidant body lotion with Retinol and Vitamin C for radiant, firm skin in warm climates.',
     isBestSeller: true
@@ -30,7 +31,8 @@ const products = [
     retailPriceNgn: 6500,
     casePriceNgn: 60000,
     caseQty: 12,
-    image: '/images/oil-pink-bottle.jpg',
+    image: '/images/proxima-oil-pink.jpg',
+    images: ['/images/proxima-oil-pink.jpg', '/images/proxima-oil-dropper-fit.jpg', '/images/lifestyle-outdoor.jpg'],
     keyActives: ['Retinol', 'Vitamin C'],
     benefit: 'Nourishing radiance elixir with active Retinol, Vitamin C, and Bulgarian Rose botanical oil.',
     isBestSeller: true
@@ -46,7 +48,8 @@ const products = [
     retailPriceNgn: 6917,
     casePriceNgn: 70000,
     caseQty: 12,
-    image: '/images/cream-pink-jar.jpg',
+    image: '/images/proxima-cream-pink.jpg',
+    images: ['/images/proxima-cream-pink.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/lifestyle-wellness.jpg', '/images/lifestyle-routine.jpg'],
     keyActives: ['Retinol', 'Vitamin C'],
     benefit: 'Velvety cellular renewal face cream to refine texture and boost natural collagen vitality in warm weather.',
     isBestSeller: false
@@ -62,7 +65,8 @@ const products = [
     retailPriceNgn: 8167,
     casePriceNgn: 85000,
     caseQty: 12,
-    image: '/images/product-shower-gel.jpg',
+    image: '/images/proxima-gel-pink.jpg',
+    images: ['/images/proxima-gel-pink.jpg', '/images/proxima-soap-lather-fit.jpg', '/images/lifestyle-scrub.jpg'],
     keyActives: ['Retinol', 'Vitamin C'],
     benefit: 'Exfoliating radiance body wash with micro-beads, Retinol, and Vitamin C for silky-smooth skin.',
     isBestSeller: false
@@ -78,7 +82,8 @@ const products = [
     retailPriceNgn: 19500,
     casePriceNgn: 190000,
     caseQty: 10,
-    image: '/images/cream-pink-jar.jpg',
+    image: '/images/proxima-set-pink.jpg',
+    images: ['/images/proxima-set-pink.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/proxima-oil-dropper-fit.jpg', '/images/lifestyle-bundle.jpg'],
     imageFlag: 'Matching 3-piece set photo pending studio supply',
     isMatchingSetShot: false,
     keyActives: ['Retinol', 'Vitamin C'],
@@ -98,7 +103,8 @@ const products = [
     retailPriceNgn: 7750,
     casePriceNgn: 75000,
     caseQty: 12,
-    image: '/images/product-body-lotion.jpg',
+    image: '/images/proxima-lotion-brown.jpg',
+    images: ['/images/proxima-lotion-brown.jpg', '/images/lifestyle-glow.jpg', '/images/proxima-packaging-angle.jpg'],
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
     benefit: 'Advanced clarifying body milk with Alpha-Arbutin and Niacinamide for even-toned, luminous clarity.',
     isBestSeller: true
@@ -114,7 +120,8 @@ const products = [
     retailPriceNgn: 6500,
     casePriceNgn: 60000,
     caseQty: 12,
-    image: '/images/product-body-oil.jpg',
+    image: '/images/proxima-oil-brown.jpg',
+    images: ['/images/proxima-oil-brown.jpg', '/images/proxima-oil-dropper-fit.jpg', '/images/lifestyle-outdoor.jpg'],
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
     benefit: 'Silky tone-correcting body oil that locks in hydration and diminishes stubborn hyperpigmentation marks.',
     isBestSeller: true
@@ -130,7 +137,8 @@ const products = [
     retailPriceNgn: 6917,
     casePriceNgn: 70000,
     caseQty: 12,
-    image: '/images/product-face-cream.jpg',
+    image: '/images/proxima-cream-brown.jpg',
+    images: ['/images/proxima-cream-brown.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/lifestyle-wellness.jpg'],
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
     benefit: 'Targeted dark-spot balancing cream formulated with pharmaceutical-grade Niacinamide and pure Arbutin.',
     isBestSeller: false
@@ -146,7 +154,8 @@ const products = [
     retailPriceNgn: 8167,
     casePriceNgn: 85000,
     caseQty: 12,
-    image: '/images/wash-brown-savon-noir.jpg',
+    image: '/images/proxima-gel-brown.jpg',
+    images: ['/images/proxima-gel-brown.jpg', '/images/proxima-soap-lather-fit.jpg', '/images/lifestyle-scrub.jpg'],
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
     benefit: 'Traditional West African Savon Noir infused with Alpha-Arbutin and Niacinamide for a purifying clarifying bath ritual.',
     isBestSeller: false
@@ -162,7 +171,8 @@ const products = [
     retailPriceNgn: 19500,
     casePriceNgn: 190000,
     caseQty: 10,
-    image: '/images/product-face-cream.jpg',
+    image: '/images/proxima-set-brown.jpg',
+    images: ['/images/proxima-set-brown.jpg', '/images/proxima-gel-brown.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/lifestyle-bundle.jpg'],
     imageFlag: 'Matching 3-piece set photo pending studio supply',
     isMatchingSetShot: false,
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
@@ -182,7 +192,8 @@ const products = [
     retailPriceNgn: 7750,
     casePriceNgn: 75000,
     caseQty: 12,
-    image: '/images/lait-corps.svg',
+    image: '/images/proxima-lotion-green.jpg',
+    images: ['/images/proxima-lotion-green.jpg', '/images/proxima-set-green.jpg', '/images/proxima-packaging-angle.jpg'],
     keyActives: ['Vitamin B3'],
     benefit: 'Soothing botanical herbal body milk enriched with Vitamin B3 to comfort and hydrate skin in hot weather.',
     isBestSeller: false
@@ -198,7 +209,8 @@ const products = [
     retailPriceNgn: 6500,
     casePriceNgn: 60000,
     caseQty: 12,
-    image: '/images/huile-corps.svg',
+    image: '/images/proxima-oil-green.jpg',
+    images: ['/images/proxima-oil-green.jpg', '/images/proxima-oil-dropper-fit.jpg', '/images/proxima-set-green.jpg'],
     keyActives: ['Vitamin B3'],
     benefit: 'Lightweight dry botanical body oil with pure plant extracts and Vitamin B3 for supple, conditioned skin.',
     isBestSeller: false
@@ -214,7 +226,8 @@ const products = [
     retailPriceNgn: 6917,
     casePriceNgn: 70000,
     caseQty: 12,
-    image: '/images/creme-visage.svg',
+    image: '/images/proxima-cream-green.jpg',
+    images: ['/images/proxima-cream-green.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/proxima-set-green.jpg'],
     keyActives: ['Vitamin B3'],
     benefit: 'Calming natural plant moisturiser with Vitamin B3 to balance sebum and fortify the delicate facial skin barrier.',
     isBestSeller: false
@@ -230,7 +243,8 @@ const products = [
     retailPriceNgn: 8167,
     casePriceNgn: 85000,
     caseQty: 12,
-    image: '/images/gel-douche.svg',
+    image: '/images/proxima-gel-green.jpg',
+    images: ['/images/proxima-gel-green.jpg', '/images/proxima-soap-lather-fit.jpg', '/images/proxima-set-green.jpg'],
     keyActives: ['Vitamin B3'],
     benefit: 'Refreshing botanical shower bath gel with natural plant extracts and Vitamin B3 for everyday skin comfort.',
     isBestSeller: false
@@ -246,7 +260,8 @@ const products = [
     retailPriceNgn: 19500,
     casePriceNgn: 190000,
     caseQty: 10,
-    image: '/images/set-green-bundle.jpg',
+    image: '/images/proxima-set-green.jpg',
+    images: ['/images/proxima-set-green.jpg', '/images/set-green-bundle.jpg', '/images/proxima-cream-texture-fit.jpg', '/images/proxima-oil-dropper-fit.jpg'],
     isMatchingSetShot: true,
     keyActives: ['Vitamin B3'],
     benefit: 'The complete daily herbal routine: Body Lotion, Vitamin B3 Glow Oil, and Face Cream photographed together in one cohesive matching bundle.',
@@ -265,7 +280,8 @@ const products = [
     retailPriceNgn: 12333,
     casePriceNgn: 130000,
     caseQty: 12,
-    image: '/images/soap-mulatto.jpg',
+    image: '/images/proxima-soap-mulatto.jpg',
+    images: ['/images/proxima-soap-mulatto.jpg', '/images/proxima-soap-mulatto-angle.jpg', '/images/proxima-soap-lather-fit.jpg', '/images/lifestyle-scrub.jpg'],
     keyActives: ['Botanical Soap Base', 'Fruit Actives'],
     benefit: 'Deeply purifying, rich African clarifying paste soap for thorough body bathing rituals.',
     isNewArrival: true
@@ -281,7 +297,8 @@ const products = [
     retailPriceNgn: 9500,
     casePriceNgn: 90000,
     caseQty: 12,
-    image: '/images/oil-snow-white.jpg',
+    image: '/images/proxima-oil-snowwhite.jpg',
+    images: ['/images/proxima-oil-snowwhite.jpg', '/images/proxima-oil-dropper-fit.jpg', '/images/lifestyle-outdoor.jpg'],
     keyActives: ['Alpha-Arbutin', 'Niacinamide'],
     benefit: 'Ultra-concentrated botanical radiance elixir described by its pure actives: Arbutin + Niacinamide.',
     isNewArrival: true
@@ -348,9 +365,9 @@ function renderProductCard(p) {
       
       <!-- Media Box -->
       <div class="relative aspect-square bg-[#EFE9DF]/80 flex items-center justify-center p-6 overflow-hidden cursor-pointer" onclick="openProductModal('${p.sku}')">
-        <!-- Wishlist Icon -->
-        <button type="button" class="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white transition-all shadow-xs" aria-label="Save to wishlist">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <!-- Interactive Wishlist Heart Button -->
+        <button type="button" onclick="event.stopPropagation(); toggleWishlist('${p.sku}')" id="heart-btn-${p.sku}" class="wishlist-heart-btn absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white transition-all shadow-xs cursor-pointer" aria-label="Add to favorites" title="Add to favorites">
+          <svg class="w-4 h-4 heart-icon transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
 
         <!-- Badges -->
@@ -360,7 +377,7 @@ function renderProductCard(p) {
           ${p.isNewArrival ? '<span class="bg-[#A32B1E] text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">New</span>' : ''}
         </div>
 
-        <!-- Product Image -->
+        <!-- Product Image (Uncropped fit) -->
         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500 ease-out" loading="lazy" />
 
         <!-- Flag Notice if photo pending -->
@@ -527,16 +544,22 @@ function renderHeader() {
         </nav>
 
         <!-- Right Action Icons -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3 sm:gap-4">
           <!-- WhatsApp Quick Contact -->
           <a href="https://wa.me/2349044943580" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full hover:bg-emerald-100 transition-colors" title="Chat on WhatsApp">
             <span>+234 904 494 3580</span>
           </a>
 
+          <!-- Header Wishlist Button -->
+          <button type="button" onclick="openWishlistDrawer()" class="relative p-2.5 rounded-full bg-white border border-[#E8DFC8] text-[#251409] hover:text-[#A32B1E] hover:border-[#A32B1E] transition-colors shadow-xs" aria-label="Favorites" title="My Favorites">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <span id="wishlist-counter-badge" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#A32B1E] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">0</span>
+          </button>
+
           <!-- Cart Button -->
           <button type="button" onclick="openCartDrawer()" class="relative p-2.5 rounded-full bg-white border border-[#E8DFC8] text-[#251409] hover:text-[#A32B1E] hover:border-[#A32B1E] transition-colors shadow-xs" aria-label="Open Shopping Bag">
             <svg class="w-5 h-5 text-[#251409]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-            <span id="cart-counter-badge" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#A32B1E] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">0</span>
+            <span id="cart-counter-badge" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#251409] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">0</span>
           </button>
         </div>
       </div>
@@ -597,7 +620,7 @@ function renderCartDrawer() {
 
     <!-- Cart Drawer Panel -->
     <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAF7F2] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-[#E8DFC8]">
-      <div class="p-5 border-b border-[#E8DFC8] flex items-center justify-between">
+      <div class="p-5 border-b border-[#E8DFC8] flex items-center justify-between bg-white">
         <div class="flex items-center gap-2">
           <svg class="w-5 h-5 text-[#251409]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
           <h2 class="font-serif text-lg font-bold text-[#251409]">Your Shopping Bag</h2>
@@ -626,14 +649,54 @@ function renderCartDrawer() {
   `;
 }
 
+function renderWishlistDrawer() {
+  return `
+    <!-- Wishlist Drawer Offcanvas Backdrop -->
+    <div id="wishlist-drawer-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden transition-opacity" onclick="closeWishlistDrawer()"></div>
+
+    <!-- Wishlist Drawer Panel -->
+    <div id="wishlist-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAF7F2] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-[#E8DFC8]">
+      <div class="p-5 border-b border-[#E8DFC8] flex items-center justify-between bg-white">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-[#FAF2E6] flex items-center justify-center">
+            <svg class="w-4 h-4 text-[#A32B1E]" fill="#A32B1E" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <div>
+            <h2 class="font-serif text-lg font-bold text-[#251409]">My Saved Favorites</h2>
+            <span id="wishlist-drawer-count" class="text-[11px] text-[#8C6D4F]">0 items</span>
+          </div>
+        </div>
+        <button type="button" onclick="closeWishlistDrawer()" class="p-2 text-[#251409]/70 hover:text-[#A32B1E] rounded-full hover:bg-[#EFE9DF] transition-colors" aria-label="Close Favorites">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div id="wishlist-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="p-5 border-t border-[#E8DFC8] bg-white space-y-3">
+        <button type="button" onclick="addAllFavoritesToCart()" class="w-full py-3.5 bg-[#251409] hover:bg-[#A32B1E] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-md">
+          <span>Add All Favorites to Bag</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
 function renderProductModal() {
   return `
     <!-- Product Quick View Modal Backdrop -->
     <div id="product-modal-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 transition-opacity" onclick="closeProductModal()">
       <div id="product-modal" class="bg-[#FAF7F2] rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#E8DFC8] shadow-2xl p-6 sm:p-8 relative" onclick="event.stopPropagation()">
-        <button type="button" onclick="closeProductModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#251409] hover:text-[#A32B1E] transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
+        <div class="absolute top-5 right-5 flex items-center gap-2">
+          <button type="button" id="modal-wishlist-toggle" onclick="toggleModalWishlist()" class="w-8 h-8 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#251409] hover:text-[#A32B1E] transition-colors shadow-xs" aria-label="Toggle favorite">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </button>
+          <button type="button" onclick="closeProductModal()" class="w-8 h-8 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#251409] hover:text-[#A32B1E] transition-colors shadow-xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
         <div id="modal-content" class="space-y-6">
           <!-- Injected via JS -->
         </div>
@@ -719,6 +782,9 @@ function generateShopHtml() {
         <button type="button" onclick="filterCatalog('All')" class="filter-btn active text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-[#251409] text-white shadow-xs" data-target="All">
           All Products (17)
         </button>
+        <button type="button" onclick="filterCatalog('favorites')" id="favorites-tab-btn" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="favorites">
+          ♥ My Favorites
+        </button>
         <button type="button" onclick="filterCatalog('pink')" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="pink">
           Pink Line · Retinol + C (5)
         </button>
@@ -742,12 +808,118 @@ function generateShopHtml() {
 
     ${renderFooter()}
     ${renderCartDrawer()}
+    ${renderWishlistDrawer()}
     ${renderProductModal()}
 
     <!-- Client-side Logic Script -->
     <script>
       const catalog = ${JSON.stringify(products)};
       let cart = [];
+      let wishlist = [];
+      let currentModalSku = null;
+
+      try {
+        const saved = localStorage.getItem('proxima_wishlist_v1');
+        if (saved) wishlist = JSON.parse(saved);
+      } catch (e) {}
+
+      function saveWishlist() {
+        try {
+          localStorage.setItem('proxima_wishlist_v1', JSON.stringify(wishlist));
+        } catch (e) {}
+        updateWishlistUi();
+      }
+
+      function toggleWishlist(sku) {
+        if (wishlist.includes(sku)) {
+          wishlist = wishlist.filter(id => id !== sku);
+        } else {
+          wishlist.push(sku);
+        }
+        saveWishlist();
+      }
+
+      function updateWishlistUi() {
+        document.getElementById('wishlist-counter-badge').textContent = wishlist.length;
+        document.getElementById('wishlist-drawer-count').textContent = wishlist.length + ' items';
+
+        catalog.forEach(p => {
+          const btn = document.getElementById('heart-btn-' + p.sku);
+          if (btn) {
+            const svg = btn.querySelector('svg');
+            if (wishlist.includes(p.sku)) {
+              btn.classList.add('ring-2', 'ring-[#A32B1E]/30', 'scale-105');
+              btn.classList.remove('text-[#251409]/60');
+              btn.classList.add('text-[#A32B1E]');
+              if (svg) svg.setAttribute('fill', '#A32B1E');
+            } else {
+              btn.classList.remove('ring-2', 'ring-[#A32B1E]/30', 'scale-105');
+              btn.classList.remove('text-[#A32B1E]');
+              btn.classList.add('text-[#251409]/60');
+              if (svg) svg.setAttribute('fill', 'none');
+            }
+          }
+        });
+
+        // Update wishlist drawer contents
+        const container = document.getElementById('wishlist-items-container');
+        const favProducts = catalog.filter(p => wishlist.includes(p.sku));
+        if (favProducts.length === 0) {
+          container.innerHTML = '<div class="text-center py-12 text-sm text-[#8C6D4F]">You have no saved favorites yet. Click the heart icon on any product to save it.</div>';
+        } else {
+          container.innerHTML = favProducts.map(p => \`
+            <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-[#E8DFC8]">
+              <img src="\${p.image}" alt="\${p.name}" class="w-14 h-14 object-contain rounded-xl bg-[#FAF7F2] p-1 border border-[#E8DFC8]/60" />
+              <div class="flex-1 min-w-0">
+                <h4 class="font-serif text-xs font-bold text-[#251409] truncate">\${p.name}</h4>
+                <span class="text-[10px] text-[#8C6D4F]">\${p.size}</span>
+                <div class="font-serif text-xs font-bold text-[#251409] mt-0.5">₦\${p.retailPriceNgn.toLocaleString()}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="addToBag('\${p.sku}')" class="px-2.5 py-1.5 bg-[#251409] text-white rounded-lg text-xs font-semibold">Add</button>
+                <button type="button" onclick="toggleWishlist('\${p.sku}')" class="p-1.5 text-rose-700 hover:text-rose-900">✕</button>
+              </div>
+            </div>
+          \`).join('');
+        }
+
+        // Update modal wishlist toggle if open
+        if (currentModalSku) {
+          const modalBtn = document.getElementById('modal-wishlist-toggle');
+          if (modalBtn) {
+            const svg = modalBtn.querySelector('svg');
+            if (wishlist.includes(currentModalSku)) {
+              modalBtn.classList.add('text-[#A32B1E]');
+              if (svg) svg.setAttribute('fill', '#A32B1E');
+            } else {
+              modalBtn.classList.remove('text-[#A32B1E]');
+              if (svg) svg.setAttribute('fill', 'none');
+            }
+          }
+        }
+      }
+
+      function toggleModalWishlist() {
+        if (!currentModalSku) return;
+        toggleWishlist(currentModalSku);
+      }
+
+      function openWishlistDrawer() {
+        document.getElementById('wishlist-drawer-backdrop').classList.remove('hidden');
+        document.getElementById('wishlist-drawer').classList.remove('translate-x-full');
+      }
+
+      function closeWishlistDrawer() {
+        document.getElementById('wishlist-drawer-backdrop').classList.add('hidden');
+        document.getElementById('wishlist-drawer').classList.add('translate-x-full');
+      }
+
+      function addAllFavoritesToCart() {
+        catalog.filter(p => wishlist.includes(p.sku)).forEach(p => {
+          addToBag(p.sku);
+        });
+        closeWishlistDrawer();
+      }
 
       function filterCatalog(line) {
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -758,6 +930,25 @@ function generateShopHtml() {
             b.classList.remove('bg-[#251409]', 'text-white', 'shadow-xs');
             b.classList.add('bg-white', 'text-[#251409]', 'border', 'border-[#E8DFC8]');
           }
+        });
+
+        if (line === 'favorites') {
+          document.querySelectorAll('.color-line-section').forEach(sec => {
+            sec.style.display = 'block';
+          });
+          document.querySelectorAll('.product-card').forEach(card => {
+            const sku = card.getAttribute('data-sku');
+            if (wishlist.includes(sku)) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+          return;
+        }
+
+        document.querySelectorAll('.product-card').forEach(card => {
+          card.style.display = 'flex';
         });
 
         document.querySelectorAll('.color-line-section').forEach(sec => {
@@ -832,14 +1023,34 @@ function generateShopHtml() {
         document.getElementById('cart-drawer').classList.add('translate-x-full');
       }
 
+      function setModalMainImage(src) {
+        document.getElementById('modal-main-image').src = src;
+      }
+
       function openProductModal(sku) {
+        currentModalSku = sku;
         const p = catalog.find(item => item.sku === sku);
         if (!p) return;
+        const gallery = p.images && p.images.length > 0 ? p.images : [p.image];
         const modalContent = document.getElementById('modal-content');
+        
+        const galleryThumbs = gallery.length > 1 ? \`
+          <div class="flex items-center gap-2 overflow-x-auto py-1 scrollbar-none">
+            \${gallery.map((img, i) => \`
+              <button type="button" onclick="setModalMainImage('\${img}')" class="w-14 h-14 rounded-xl p-1 bg-white border border-[#E8DFC8] hover:border-[#251409] flex-shrink-0 cursor-pointer overflow-hidden">
+                <img src="\${img}" class="w-full h-full object-contain" />
+              </button>
+            \`).join('')}
+          </div>
+        \` : '';
+
         modalContent.innerHTML = \`
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="aspect-square bg-[#EFE9DF] rounded-2xl flex items-center justify-center p-6 border border-[#E8DFC8]">
-              <img src="\${p.image}" alt="\${p.name}" class="w-full h-full object-contain" />
+            <div class="space-y-3">
+              <div class="aspect-square bg-[#FAF7F2] rounded-2xl flex items-center justify-center p-6 border border-[#E8DFC8]">
+                <img id="modal-main-image" src="\${p.image}" alt="\${p.name}" class="w-full h-full object-contain" />
+              </div>
+              \${galleryThumbs}
             </div>
             <div class="space-y-4">
               <div>
@@ -855,8 +1066,8 @@ function generateShopHtml() {
                   \${p.keyActives.map(a => \`<span class="text-[10px] font-semibold text-[#603B1F] bg-[#FAF2E6] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]">\${a}</span>\`).join('')}
                 </div>
               </div>
-              <div class="pt-4">
-                <button type="button" onclick="addToBag('\${p.sku}'); closeProductModal();" class="w-full py-3 bg-[#251409] hover:bg-[#A32B1E] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-md">
+              <div class="pt-4 flex gap-2">
+                <button type="button" onclick="addToBag('\${p.sku}'); closeProductModal();" class="flex-1 py-3 bg-[#251409] hover:bg-[#A32B1E] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-md">
                   Add to Bag — ₦\${p.retailPriceNgn.toLocaleString()}
                 </button>
               </div>
@@ -864,10 +1075,12 @@ function generateShopHtml() {
           </div>
         \`;
         document.getElementById('product-modal-backdrop').classList.remove('hidden');
+        updateWishlistUi();
       }
 
       function closeProductModal() {
         document.getElementById('product-modal-backdrop').classList.add('hidden');
+        currentModalSku = null;
       }
 
       function checkoutWhatsApp() {
@@ -883,6 +1096,7 @@ function generateShopHtml() {
 
       // Initialize
       updateCartUi();
+      updateWishlistUi();
     </script>
   </body>
 </html>
@@ -892,7 +1106,7 @@ function generateShopHtml() {
 // 1. Write shop.html
 const shopHtml = generateShopHtml();
 fs.writeFileSync(path.join(__dirname, '../shop.html'), shopHtml, 'utf8');
-console.log('Generated shop.html successfully with all 17 products!');
+console.log('Generated shop.html successfully with all 17 products & interactive wishlist!');
 
 // 2. Pre-render markup into index.html inside <div id="root">...</div>
 const indexHtmlPath = path.join(__dirname, '../index.html');
@@ -918,6 +1132,9 @@ const preRenderedContent = `
           All Products (17)
         </button>
         <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
+          ♥ My Favorites
+        </button>
+        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
           Pink Line · Retinol + C (5)
         </button>
         <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
@@ -935,9 +1152,18 @@ const preRenderedContent = `
       ${renderWholesaleTable()}
     </main>
     ${renderFooter()}
+    ${renderWishlistDrawer()}
   </div>
 `;
 
-const updatedIndexHtml = indexHtmlContent.replace(/<div id="root"><\/div>|<div id="root">[\s\S]*?<\/div>/, preRenderedContent.trim());
+let updatedIndexHtml;
+if (indexHtmlContent.includes('<div id="root"></div>')) {
+  updatedIndexHtml = indexHtmlContent.replace('<div id="root"></div>', preRenderedContent.trim());
+} else {
+  updatedIndexHtml = indexHtmlContent.replace(
+    /<div id="root">[\s\S]*<\/div>(\s*<script type="module" src="\/src\/main\.tsx"><\/script>)/,
+    `${preRenderedContent.trim()}$1`
+  );
+}
 fs.writeFileSync(indexHtmlPath, updatedIndexHtml, 'utf8');
-console.log('Updated index.html with pre-rendered 17-product catalog markup successfully!');
+console.log('Updated index.html with pre-rendered 17-product catalog markup and wishlist successfully!');

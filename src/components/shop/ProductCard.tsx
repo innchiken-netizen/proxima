@@ -3,6 +3,7 @@ import { ShoppingBag, Eye, Heart, Sparkles } from 'lucide-react';
 import { Product } from '../../types';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 
 interface ProductCardProps {
   product: Product;
@@ -12,6 +13,9 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
   const { lang, t } = useLanguage();
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
+  const isFavorite = isInWishlist(product.sku);
 
   const isFrench = lang === 'fr';
   const displayName = isFrench ? product.frenchName : product.name;
@@ -59,11 +63,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
           type="button"
           onClick={(e) => {
             e.stopPropagation();
+            toggleWishlist(product.sku);
           }}
-          className="absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white transition-all shadow-xs"
-          aria-label="Save to wishlist"
+          className={`wishlist-heart-btn absolute top-4 left-4 z-10 w-8 h-8 rounded-full backdrop-blur-xs flex items-center justify-center transition-all shadow-xs cursor-pointer ${
+            isFavorite
+              ? 'bg-white text-[#A32B1E] ring-2 ring-[#A32B1E]/20 scale-105'
+              : 'bg-white/80 text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white'
+          }`}
+          aria-label={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
+          title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
         >
-          <Heart className="w-4 h-4" />
+          <Heart className={`w-4 h-4 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
         </button>
 
         {/* Badges */}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu, X, MessageCircle, Globe, ChevronDown, Heart } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 
 interface NavbarProps {
   currentTab: string;
@@ -11,6 +12,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => {
   const { lang, setLang, t } = useLanguage();
   const { totalCount, setIsCartOpen } = useCart();
+  const { wishlistCount, setIsWishlistOpen } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [discoverDropdown, setDiscoverDropdown] = useState(false);
@@ -212,11 +214,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
 
               {/* Wishlist Icon */}
               <button
-                onClick={() => handleNavClick('shop')}
-                className="p-2 text-[#251409]/80 hover:text-[#A32B1E] transition-colors hidden md:block"
+                onClick={() => setIsWishlistOpen(true)}
+                className="relative p-2 text-[#251409]/80 hover:text-[#A32B1E] transition-colors"
                 aria-label="Wishlist"
+                title={lang === 'fr' ? 'Mes Favoris' : 'My Favorites'}
               >
-                <Heart className="w-4 h-4" />
+                <Heart className={`w-5 h-5 transition-colors ${wishlistCount > 0 ? 'text-[#A32B1E] fill-[#A32B1E]' : ''}`} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-[#A32B1E] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                    {wishlistCount}
+                  </span>
+                )}
               </button>
 
               {/* Direct WhatsApp Pill */}

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { FloatingWhatsApp } from './components/layout/FloatingWhatsApp';
 import { CartDrawer } from './components/shop/CartDrawer';
+import { WishlistDrawer } from './components/shop/WishlistDrawer';
 import { ProductModal } from './components/shop/ProductModal';
 import { HomePage } from './pages/HomePage';
 import { ShopPage } from './pages/ShopPage';
@@ -115,6 +117,9 @@ const MainApp: React.FC = () => {
 
       {/* Master Footer */}
       <Footer setCurrentTab={setCurrentTab} />
+
+      {/* Wishlist Drawer */}
+      <WishlistDrawer onQuickView={handleQuickView} />
     </div>
   );
 };
@@ -123,7 +128,9 @@ export const App: React.FC = () => {
   return (
     <LanguageProvider>
       <CartProvider>
-        <MainApp />
+        <WishlistProvider>
+          <MainApp />
+        </WishlistProvider>
       </CartProvider>
     </LanguageProvider>
   );
