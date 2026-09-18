@@ -36,12 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
     <>
       {/* Top Announcement Bar */}
       <div className="bg-[#231710] text-[#EADCC8] py-2 px-4 text-xs tracking-wider border-b border-[#3A2318]/50 flex items-center justify-between sm:justify-center relative z-50">
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-medium text-[11px] sm:text-xs">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+          <span className="font-medium text-[11px] sm:text-xs truncate">
             {lang === 'fr'
-              ? 'Science formulatoire française x Réalité de la peau africaine · Siège au Trade Fair Complex, Lagos'
-              : 'French formulation science x African understanding · Headquartered at Trade Fair Complex, Lagos'}
+              ? 'Expédition express à Lagos & livraison partout en Afrique de l’Ouest'
+              : 'Express dispatch in Lagos & delivery across West Africa'}
           </span>
         </div>
 
