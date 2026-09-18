@@ -107,11 +107,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
           {/* Left: Product Visual Gallery */}
           <div className="flex flex-col">
             {/* Main Image Box */}
-            <div className="relative aspect-square sm:aspect-[4/5] bg-[#FAF7F2] rounded-2xl p-6 flex items-center justify-center border border-proxima-brown-light/20 shadow-inner overflow-hidden">
+            <div className="relative aspect-[3/4] bg-[#FAF7F2] rounded-2xl flex items-center justify-center border border-proxima-brown-light/20 shadow-inner overflow-hidden">
               <img
                 src={gallery[activeImgIndex]}
                 alt={`${displayName} - View ${activeImgIndex + 1}`}
-                className="w-full h-full object-contain transition-all duration-300"
+                className="w-full h-full object-cover transition-all duration-300"
               />
               <span className="absolute top-4 right-4 bg-white/90 text-proxima-brown-deep text-xs font-semibold px-2.5 py-1 rounded-md border border-proxima-brown-light/30 shadow-xs">
                 {product.size}

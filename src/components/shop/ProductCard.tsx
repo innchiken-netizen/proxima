@@ -55,7 +55,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
       
       {/* Media Box */}
       <div
-        className="relative aspect-square bg-[#EFE9DF]/80 flex items-center justify-center p-6 overflow-hidden cursor-pointer"
+        className="relative aspect-[3/4] bg-[#FAF7F2] flex items-center justify-center overflow-hidden cursor-pointer"
         onClick={() => onQuickView(product)}
       >
         {/* Wishlist Heart Icon (Inspired by Skin Cafe & Ariva) */}
@@ -65,10 +65,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
             e.stopPropagation();
             toggleWishlist(product.sku);
           }}
-          className={`wishlist-heart-btn absolute top-4 left-4 z-10 w-8 h-8 rounded-full backdrop-blur-xs flex items-center justify-center transition-all shadow-xs cursor-pointer ${
+          className={`wishlist-heart-btn absolute top-3.5 left-3.5 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center transition-all shadow-sm cursor-pointer hover:bg-white ${
             isFavorite
-              ? 'bg-white text-[#A32B1E] ring-2 ring-[#A32B1E]/20 scale-105'
-              : 'bg-white/80 text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white'
+              ? 'text-[#A32B1E] ring-2 ring-[#A32B1E]/20 scale-105'
+              : 'text-[#251409]/70 hover:text-[#A32B1E]'
           }`}
           aria-label={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
           title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
@@ -77,19 +77,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         </button>
 
         {/* Badges */}
-        <div className="absolute top-4 right-4 z-10 flex flex-col gap-1 items-end">
+        <div className="absolute top-3.5 right-3.5 z-10 flex flex-col gap-1 items-end">
           {lineInfo && (
-            <span className={`text-[8px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border shadow-xs ${lineInfo.bg}`}>
+            <span className={`text-[8px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border shadow-xs backdrop-blur-xs bg-white/95 ${lineInfo.bg}`}>
               {lineInfo.label}
             </span>
           )}
           {product.isBestSeller && (
-            <span className="bg-[#251409] text-[#EADCC8] text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-xs">
+            <span className="bg-[#251409]/95 text-[#EADCC8] text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-xs backdrop-blur-xs">
               {isFrench ? 'Best Seller' : 'Best Seller'}
             </span>
           )}
           {product.isNewArrival && (
-            <span className="bg-[#A32B1E] text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-xs">
+            <span className="bg-[#A32B1E]/95 text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-xs backdrop-blur-xs">
               {isFrench ? 'Nouveau' : 'New'}
             </span>
           )}
@@ -99,7 +99,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
         <img
           src={product.image}
           alt={displayName}
-          className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500 ease-out"
+          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
         />
 

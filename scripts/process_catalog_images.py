@@ -10,7 +10,7 @@ def find_file(pattern):
         return matches[0]
     return None
 
-def fit_to_square(input_path, output_name, size=1080, inner_ratio=0.90):
+def fit_to_portrait_3_4(input_path, output_name, target_w=1200, target_h=1600):
     if not input_path or not os.path.exists(input_path):
         print(f"Warning: file not found: {input_path}")
         return None
@@ -19,35 +19,49 @@ def fit_to_square(input_path, output_name, size=1080, inner_ratio=0.90):
     with Image.open(input_path) as img:
         img = img.convert('RGB')
         w, h = img.size
+        ratio = w / h
+        target_ratio = target_w / target_h # 0.75 (3:4)
         
-        # Sample edge colors from the 4 corners to blend naturally
+        # 1. If already native 3:4 (like 1792x2400)
+        if abs(ratio - target_ratio) < 0.03:
+            resized = img.resize((target_w, target_h), Image.Resampling.LANCZOS)
+            resized.save(output_path, 'JPEG', quality=90, optimize=True)
+            print(f"Generated (Full Bleed 3:4): {output_name} ({target_w}x{target_h})")
+            return f"/images/{output_name}"
+            
+        # 2. If 9:16 portrait (e.g. 1536x2752), crop vertical excess to 3:4
+        if ratio < 0.65:
+            new_h = int(w / target_ratio) # 1536 * 4 / 3 = 2048
+            y_start = max(0, min(200, h - new_h))
+            cropped = img.crop((0, y_start, w, y_start + new_h))
+            resized = cropped.resize((target_w, target_h), Image.Resampling.LANCZOS)
+            resized.save(output_path, 'JPEG', quality=90, optimize=True)
+            print(f"Generated (Framed 3:4): {output_name} ({target_w}x{target_h})")
+            return f"/images/{output_name}"
+            
+        # 3. If square/other, center on seamless studio canvas in 3:4
         corners = [
             img.getpixel((0, 0)),
             img.getpixel((w - 1, 0)),
             img.getpixel((0, h - 1)),
             img.getpixel((w - 1, h - 1)),
-            img.getpixel((w // 2, 0)),
-            img.getpixel((w // 2, h - 1))
+            img.getpixel((w // 2, 0))
         ]
         avg_r = int(sum(c[0] for c in corners) / len(corners))
         avg_g = int(sum(c[1] for c in corners) / len(corners))
         avg_b = int(sum(c[2] for c in corners) / len(corners))
         bg_color = (avg_r, avg_g, avg_b)
         
-        target_inner = int(size * inner_ratio)
-        scale = min(target_inner / w, target_inner / h)
-        new_w = int(w * scale)
-        new_h = int(h * scale)
+        canvas = Image.new('RGB', (target_w, target_h), bg_color)
+        scale = min((target_w * 0.95) / w, (target_h * 0.90) / h)
+        nw, nh = int(w * scale), int(h * scale)
+        resized = img.resize((nw, nh), Image.Resampling.LANCZOS)
         
-        resized = img.resize((new_w, new_h), Image.Resampling.LANCZOS)
-        
-        canvas = Image.new('RGB', (size, size), bg_color)
-        offset_x = (size - new_w) // 2
-        offset_y = (size - new_h) // 2
-        canvas.paste(resized, (offset_x, offset_y))
-        
-        canvas.save(output_path, 'JPEG', quality=88, optimize=True)
-        print(f"Generated: {output_name} ({size}x{size})")
+        ox = (target_w - nw) // 2
+        oy = (target_h - nh) // 2
+        canvas.paste(resized, (ox, oy))
+        canvas.save(output_path, 'JPEG', quality=90, optimize=True)
+        print(f"Generated (Studio 3:4): {output_name} ({target_w}x{target_h})")
         return f"/images/{output_name}"
 
 def main():
@@ -93,57 +107,64 @@ def main():
     gel_green_src = find_file('*Two_women_holding_product_bott*')
     set_green_src = find_file('*Woman_holding_product_bottles*051950*')
 
-    # 1. Generate Primary Product Images (1080x1080 Square, Uncropped)
+    # 1. Generate Primary Product Images (1200x1600 Portrait 3:4, Uncropped & Full Bleed)
     # PINK LINE (Retinol + Vitamin C)
-    fit_to_square(lotion_pink_src, 'proxima-lotion-pink.jpg')
-    fit_to_square(oil_pink_src, 'proxima-oil-pink.jpg')
-    fit_to_square(face_cream_user, 'proxima-cream-pink.jpg')
-    fit_to_square(gel_pink_src, 'proxima-gel-pink.jpg')
-    fit_to_square(set_pink_src, 'proxima-set-pink.jpg')
+    fit_to_portrait_3_4(lotion_pink_src, 'proxima-lotion-pink.jpg')
+    fit_to_portrait_3_4(oil_pink_src, 'proxima-oil-pink.jpg')
+    fit_to_portrait_3_4(face_cream_user, 'proxima-cream-pink.jpg')
+    fit_to_portrait_3_4(gel_pink_src, 'proxima-gel-pink.jpg')
+    fit_to_portrait_3_4(set_pink_src, 'proxima-set-pink.jpg')
     
     # BROWN LINE (Alpha-Arbutin + Niacinamide)
-    fit_to_square(lotion_brown_src, 'proxima-lotion-brown.jpg')
-    fit_to_square(oil_brown_src, 'proxima-oil-brown.jpg')
-    fit_to_square(cream_brown_src, 'proxima-cream-brown.jpg')
-    fit_to_square(gel_brown_src, 'proxima-gel-brown.jpg')
-    fit_to_square(set_brown_src, 'proxima-set-brown.jpg')
+    fit_to_portrait_3_4(lotion_brown_src, 'proxima-lotion-brown.jpg')
+    fit_to_portrait_3_4(oil_brown_src, 'proxima-oil-brown.jpg')
+    fit_to_portrait_3_4(cream_brown_src, 'proxima-cream-brown.jpg')
+    fit_to_portrait_3_4(gel_brown_src, 'proxima-gel-brown.jpg')
+    fit_to_portrait_3_4(set_brown_src, 'proxima-set-brown.jpg')
     
     # GREEN LINE (Vitamin B3)
-    fit_to_square(lotion_green_src, 'proxima-lotion-green.jpg')
-    fit_to_square(oil_green_src, 'proxima-oil-green.jpg')
-    fit_to_square(cream_green_src, 'proxima-cream-green.jpg')
-    fit_to_square(gel_green_src, 'proxima-gel-green.jpg')
-    fit_to_square(set_green_src, 'proxima-set-green.jpg')
+    fit_to_portrait_3_4(lotion_green_src, 'proxima-lotion-green.jpg')
+    fit_to_portrait_3_4(oil_green_src, 'proxima-oil-green.jpg')
+    fit_to_portrait_3_4(cream_green_src, 'proxima-cream-green.jpg')
+    fit_to_portrait_3_4(gel_green_src, 'proxima-gel-green.jpg')
+    fit_to_portrait_3_4(set_green_src, 'proxima-set-green.jpg')
     
     # SPECIALTY
-    fit_to_square(molato_soap_1, 'proxima-soap-mulatto.jpg')
-    fit_to_square(snow_white, 'proxima-oil-snowwhite.jpg')
+    fit_to_portrait_3_4(molato_soap_1, 'proxima-soap-mulatto.jpg')
+    fit_to_portrait_3_4(snow_white, 'proxima-oil-snowwhite.jpg')
     
     # 2. Generate Gallery / Lifestyle / Texture Images
-    fit_to_square(woman_hero, 'hero-model.jpg', size=1200, inner_ratio=0.98)
-    fit_to_square(woman_lotion_1, 'lifestyle-glow.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(woman_cheek_1, 'lifestyle-routine.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(woman_face_cream, 'lifestyle-wellness.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(woman_skincare, 'lifestyle-outdoor.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(woman_scrub, 'lifestyle-scrub.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(set_bundle, 'lifestyle-bundle.jpg', size=800, inner_ratio=0.95)
-    fit_to_square(molato_soap_2, 'proxima-soap-mulatto-angle.jpg', size=1080, inner_ratio=0.92)
-    fit_to_square(packaging_box, 'proxima-packaging-angle.jpg', size=1080, inner_ratio=0.92)
+    fit_to_portrait_3_4(woman_hero, 'hero-model.jpg')
+    fit_to_portrait_3_4(woman_lotion_1, 'lifestyle-glow.jpg')
+    fit_to_portrait_3_4(woman_cheek_1, 'lifestyle-routine.jpg')
+    fit_to_portrait_3_4(woman_face_cream, 'lifestyle-wellness.jpg')
+    fit_to_portrait_3_4(woman_skincare, 'lifestyle-outdoor.jpg')
+    fit_to_portrait_3_4(woman_scrub, 'lifestyle-scrub.jpg')
+    fit_to_portrait_3_4(set_bundle, 'lifestyle-bundle.jpg')
+    fit_to_portrait_3_4(molato_soap_2, 'proxima-soap-mulatto-angle.jpg')
+    fit_to_portrait_3_4(packaging_box, 'proxima-packaging-angle.jpg')
     
     # Texture generated assets
     cream_texture = os.path.join(IMAGE_DIR, 'proxima-cream-texture.jpg')
     if os.path.exists(cream_texture):
-        fit_to_square(cream_texture, 'proxima-cream-texture-fit.jpg', size=1080, inner_ratio=0.98)
+        fit_to_portrait_3_4(cream_texture, 'proxima-cream-texture-fit.jpg')
         
     oil_dropper = os.path.join(IMAGE_DIR, 'proxima-oil-dropper.jpg')
     if os.path.exists(oil_dropper):
-        fit_to_square(oil_dropper, 'proxima-oil-dropper-fit.jpg', size=1080, inner_ratio=0.98)
+        fit_to_portrait_3_4(oil_dropper, 'proxima-oil-dropper-fit.jpg')
 
     soap_lather = os.path.join(IMAGE_DIR, 'proxima-soap-lather.jpg')
     if os.path.exists(soap_lather):
-        fit_to_square(soap_lather, 'proxima-soap-lather-fit.jpg', size=1080, inner_ratio=0.98)
+        fit_to_portrait_3_4(soap_lather, 'proxima-soap-lather-fit.jpg')
 
-    print("All catalog and gallery images processed successfully!")
+    # Copy alias files for legacy compatibility
+    import shutil
+    shutil.copyfile(os.path.join(IMAGE_DIR, 'proxima-set-green.jpg'), os.path.join(IMAGE_DIR, 'set-green-bundle.jpg'))
+    shutil.copyfile(os.path.join(IMAGE_DIR, 'proxima-soap-mulatto.jpg'), os.path.join(IMAGE_DIR, 'soap-mulatto.jpg'))
+    shutil.copyfile(os.path.join(IMAGE_DIR, 'proxima-oil-snowwhite.jpg'), os.path.join(IMAGE_DIR, 'oil-snow-white.jpg'))
+    shutil.copyfile(os.path.join(IMAGE_DIR, 'proxima-oil-snowwhite.jpg'), os.path.join(IMAGE_DIR, 'product-glow-oil.jpg'))
+
+    print("All catalog and gallery images processed successfully in full bleed 3:4!")
 
 if __name__ == '__main__':
     main()

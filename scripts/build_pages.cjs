@@ -364,21 +364,21 @@ function renderProductCard(p) {
     <div class="product-card group relative bg-[#F7F3EC] rounded-3xl overflow-hidden border border-[#E8DFC8]/70 hover:border-[#C9A87C] transition-all duration-300 flex flex-col justify-between hover:shadow-lg" data-sku="${p.sku}" data-line="${p.colorLine}" data-category="${p.category}">
       
       <!-- Media Box -->
-      <div class="relative aspect-square bg-[#EFE9DF]/80 flex items-center justify-center p-6 overflow-hidden cursor-pointer" onclick="openProductModal('${p.sku}')">
+      <div class="relative aspect-[3/4] bg-[#FAF7F2] flex items-center justify-center overflow-hidden cursor-pointer" onclick="openProductModal('${p.sku}')">
         <!-- Interactive Wishlist Heart Button -->
-        <button type="button" onclick="event.stopPropagation(); toggleWishlist('${p.sku}')" id="heart-btn-${p.sku}" class="wishlist-heart-btn absolute top-4 left-4 z-10 w-8 h-8 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-[#251409]/60 hover:text-[#A32B1E] hover:bg-white transition-all shadow-xs cursor-pointer" aria-label="Add to favorites" title="Add to favorites">
+        <button type="button" onclick="event.stopPropagation(); toggleWishlist('${p.sku}')" id="heart-btn-${p.sku}" class="wishlist-heart-btn absolute top-3.5 left-3.5 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-[#251409]/70 hover:text-[#A32B1E] hover:bg-white transition-all shadow-sm cursor-pointer" aria-label="Add to favorites" title="Add to favorites">
           <svg class="w-4 h-4 heart-icon transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
         </button>
 
         <!-- Badges -->
-        <div class="absolute top-4 right-4 z-10 flex flex-col gap-1 items-end">
+        <div class="absolute top-3.5 right-3.5 z-10 flex flex-col gap-1 items-end">
           ${lineBadge}
-          ${p.isBestSeller ? '<span class="bg-[#251409] text-[#EADCC8] text-[9px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">Best Seller</span>' : ''}
-          ${p.isNewArrival ? '<span class="bg-[#A32B1E] text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">New</span>' : ''}
+          ${p.isBestSeller ? '<span class="bg-[#251409]/95 text-[#EADCC8] text-[9px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full shadow-xs backdrop-blur-xs">Best Seller</span>' : ''}
+          ${p.isNewArrival ? '<span class="bg-[#A32B1E]/95 text-white text-[9px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full shadow-xs backdrop-blur-xs">New</span>' : ''}
         </div>
 
-        <!-- Product Image (Uncropped fit) -->
-        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500 ease-out" loading="lazy" />
+        <!-- Product Image (Full bleed 3:4) -->
+        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-out" loading="lazy" />
 
         <!-- Flag Notice if photo pending -->
         ${flagNotice}
@@ -1047,8 +1047,8 @@ function generateShopHtml() {
         modalContent.innerHTML = \`
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="space-y-3">
-              <div class="aspect-square bg-[#FAF7F2] rounded-2xl flex items-center justify-center p-6 border border-[#E8DFC8]">
-                <img id="modal-main-image" src="\${p.image}" alt="\${p.name}" class="w-full h-full object-contain" />
+              <div class="aspect-[3/4] bg-[#FAF7F2] rounded-2xl flex items-center justify-center border border-[#E8DFC8] overflow-hidden">
+                <img id="modal-main-image" src="\${p.image}" alt="\${p.name}" class="w-full h-full object-cover" />
               </div>
               \${galleryThumbs}
             </div>
