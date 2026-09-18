@@ -10,7 +10,7 @@ export interface Product {
   sku: string;
   name: string;
   frenchName: string;
-  category: 'Face' | 'Body' | 'Sets & Routines';
+  category: string;
   size: string;
   retailPriceNgn: number;
   casePriceNgn: number;
@@ -18,6 +18,10 @@ export interface Product {
   status: 'clean image available' | 'no image yet' | 'excluded';
   image: string;
   keyActives: string[];
+  colorLine?: 'pink' | 'brown' | 'green' | 'specialty';
+  colorLabel?: string;
+  imageFlag?: string;
+  isMatchingSetShot?: boolean;
   benefitStatement: {
     en: string;
     fr: string;

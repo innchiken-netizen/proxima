@@ -12,26 +12,69 @@ interface ShopPageProps {
 
 export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }) => {
   const { lang, t } = useLanguage();
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Face' | 'Body' | 'Sets & Routines' | 'Best Sellers' | 'New Arrivals'>('All');
+  const [activeFilter, setActiveFilter] = useState<string>('All');
 
   const isFrench = lang === 'fr';
 
+  const productLines = [
+    {
+      id: 'pink',
+      name: isFrench ? 'Ligne Rose · Rétinol + Vitamine C' : 'Pink Line · Retinol + Vitamin C',
+      badge: 'Retinol + Vitamin C',
+      description: isFrench
+        ? 'Formule lissante et antioxydante au Rétinol à libération prolongée et Vitamine C.'
+        : 'Cellular renewal and antioxidant protection formulated for radiant, firm skin in tropical heat.',
+      tagColor: 'bg-rose-100 text-rose-800 border-rose-200',
+    },
+    {
+      id: 'brown',
+      name: isFrench ? 'Ligne Marron · Alpha-Arbutine + Niacinamide' : 'Brown Line · Arbutin + Niacinamide',
+      badge: 'Alpha-Arbutin + Niacinamide',
+      description: isFrench
+        ? 'Clarification cutanée ciblée et respectueuse de la barrière : unifie le teint sans agents agressifs.'
+        : 'Clarifying precision without toxic bleaching agents. Fades dark marks and unifies tone safely.',
+      tagColor: 'bg-amber-100 text-amber-900 border-amber-200',
+    },
+    {
+      id: 'green',
+      name: isFrench ? 'Ligne Verte · Vitamine B3' : 'Green Line · Vitamin B3',
+      badge: 'Vitamin B3',
+      description: isFrench
+        ? 'Hydratation botanique quotidienne et apaisement intensif aux extraits de plantes et Vitamine B3.'
+        : 'Daily herbal hydration and soothing barrier reinforcement engineered for warm weather comfort.',
+      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-200',
+    },
+    {
+      id: 'specialty',
+      name: isFrench ? 'Formules Spécialité' : 'Specialty Formulations',
+      badge: 'Specialty Formulations',
+      description: isFrench
+        ? 'Pâte de savon purifiante traditionnelle africaine et huile concentrée Snow White aux actifs purs.'
+        : 'Concentrated specialty treatments: Traditional African whipped paste soap and pure active Snow White oil.',
+      tagColor: 'bg-purple-100 text-purple-900 border-purple-200',
+    },
+  ];
+
   const filterOptions = [
-    { id: 'All', label: isFrench ? 'Tous les produits' : 'All Products' },
+    { id: 'All', label: isFrench ? 'Tous les produits (17)' : 'All Products (17)' },
+    { id: 'pink', label: isFrench ? 'Ligne Rose (5)' : 'Pink Line (5)' },
+    { id: 'brown', label: isFrench ? 'Ligne Marron (5)' : 'Brown Line (5)' },
+    { id: 'green', label: isFrench ? 'Ligne Verte (5)' : 'Green Line (5)' },
+    { id: 'specialty', label: isFrench ? 'Spécialités (2)' : 'Specialty (2)' },
     { id: 'Body', label: isFrench ? 'Soins Corps' : 'Body Care' },
     { id: 'Face', label: isFrench ? 'Soins Visage' : 'Face Care' },
-    { id: 'Best Sellers', label: isFrench ? 'Meilleures Ventes' : 'Best Sellers' },
-    { id: 'New Arrivals', label: isFrench ? 'Nouveautés' : 'New Arrivals' },
-    { id: 'Sets & Routines', label: isFrench ? 'Coffrets & Rituels' : 'Sets & Routines' },
+    { id: 'Sets', label: isFrench ? 'Coffrets Complets' : 'Complete Routine Sets' },
   ];
 
   const filteredProducts = liveProducts.filter(p => {
     if (activeFilter === 'All') return true;
-    if (activeFilter === 'Face') return p.category === 'Face';
-    if (activeFilter === 'Body') return p.category === 'Body';
-    if (activeFilter === 'Best Sellers') return p.isBestSeller === true;
-    if (activeFilter === 'New Arrivals') return p.isNewArrival === true;
-    if (activeFilter === 'Sets & Routines') return p.category === 'Sets & Routines';
+    if (activeFilter === 'pink') return p.colorLine === 'pink';
+    if (activeFilter === 'brown') return p.colorLine === 'brown';
+    if (activeFilter === 'green') return p.colorLine === 'green';
+    if (activeFilter === 'specialty') return p.colorLine === 'specialty';
+    if (activeFilter === 'Face') return p.category === 'Face Cream';
+    if (activeFilter === 'Body') return p.category === 'Body Lotion' || p.category === 'Body Oil' || p.category === 'Shower Gel' || p.category === 'Specialty';
+    if (activeFilter === 'Sets') return p.category === 'Complete Routine Set';
     return true;
   });
 
@@ -93,8 +136,8 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
         {filterOptions.map(opt => (
           <button
             key={opt.id}
-            onClick={() => setActiveFilter(opt.id as any)}
-            className={`text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all ${
+            onClick={() => setActiveFilter(opt.id)}
+            className={`text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all cursor-pointer ${
               activeFilter === opt.id
                 ? 'bg-proxima-brown text-white shadow-xs'
                 : 'bg-white text-proxima-brown-deep border border-proxima-brown-light/30 hover:border-proxima-brown'
@@ -105,8 +148,45 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
         ))}
       </div>
 
-      {/* Product Grid */}
-      {filteredProducts.length > 0 ? (
+      {/* Product Catalog Display */}
+      {activeFilter === 'All' ? (
+        /* Visual Grouping by Color Line (Pink, Brown, Green, Specialty) */
+        <div className="space-y-12">
+          {productLines.map(line => {
+            const lineProducts = liveProducts.filter(p => p.colorLine === line.id);
+            if (lineProducts.length === 0) return null;
+
+            return (
+              <div key={line.id} className="space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8DFC8]">
+                  <div className="flex items-center gap-3">
+                    <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#251409]">
+                      {line.name}
+                    </h2>
+                    <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border shadow-xs ${line.tagColor}`}>
+                      {line.badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#6B5E51] max-w-md leading-relaxed">
+                    {line.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {lineProducts.map(product => (
+                    <ProductCard
+                      key={product.sku}
+                      product={product}
+                      onQuickView={onQuickView}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Filtered Grid */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map(product => (
             <ProductCard
@@ -115,25 +195,6 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
               onQuickView={onQuickView}
             />
           ))}
-        </div>
-      ) : (
-        /* Empty Filter State (e.g. Sets & Routines bundle) */
-        <div className="bg-white rounded-3xl p-12 text-center border border-proxima-brown-light/20 max-w-lg mx-auto space-y-4">
-          <Sparkles className="w-10 h-10 text-proxima-brown-light mx-auto" />
-          <h3 className="font-serif text-lg font-bold text-proxima-brown-deep">
-            {isFrench ? 'Coffrets personnalisés' : 'Custom Sets & Routines'}
-          </h3>
-          <p className="text-xs text-proxima-black/70 leading-relaxed">
-            {isFrench
-              ? 'Créez votre propre coffret en composant vos soins dans le diagnostic de peau.'
-              : 'Assemble your tailored 4-step routine bundle directly via our routine quiz.'}
-          </p>
-          <button
-            onClick={() => setCurrentTab('routine')}
-            className="bg-proxima-brown hover:bg-proxima-red text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition-colors"
-          >
-            {t.quiz.badge} →
-          </button>
         </div>
       )}
     </div>

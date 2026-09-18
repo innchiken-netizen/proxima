@@ -14,18 +14,57 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
   const { lang, t } = useLanguage();
   const isFrench = lang === 'fr';
 
-  const [activeCategory, setActiveCategory] = useState<'All' | 'Body' | 'Face' | 'Best Sellers'>('All');
+  const [activeLine, setActiveLine] = useState<string>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const featuredOilProduct = liveProducts.find(p => p.sku === 'PDL-HUILE') || liveProducts[0];
+  const featuredOilProduct = liveProducts.find(p => p.sku === 'PDL-OIL-PINK') || liveProducts[0];
 
-  const filteredCollection = liveProducts.filter(p => {
-    if (activeCategory === 'All') return true;
-    if (activeCategory === 'Body') return p.category === 'Body';
-    if (activeCategory === 'Face') return p.category === 'Face';
-    if (activeCategory === 'Best Sellers') return p.isBestSeller;
-    return true;
-  });
+  const productLines = [
+    {
+      id: 'pink',
+      name: isFrench ? 'Ligne Rose · Rétinol + Vitamine C' : 'Pink Line · Retinol + Vitamin C',
+      badge: 'Retinol + Vitamin C',
+      description: isFrench
+        ? 'Formule lissante et antioxydante au Rétinol à libération prolongée et Vitamine C.'
+        : 'Cellular renewal and antioxidant protection formulated for radiant, firm skin in tropical heat.',
+      tagColor: 'bg-rose-100 text-rose-800 border-rose-200',
+    },
+    {
+      id: 'brown',
+      name: isFrench ? 'Ligne Marron · Alpha-Arbutine + Niacinamide' : 'Brown Line · Arbutin + Niacinamide',
+      badge: 'Alpha-Arbutin + Niacinamide',
+      description: isFrench
+        ? 'Clarification cutanée ciblée et respectueuse de la barrière : unifie le teint sans agents agressifs.'
+        : 'Clarifying precision without toxic bleaching agents. Fades dark marks and unifies tone safely.',
+      tagColor: 'bg-amber-100 text-amber-900 border-amber-200',
+    },
+    {
+      id: 'green',
+      name: isFrench ? 'Ligne Verte · Vitamine B3' : 'Green Line · Vitamin B3',
+      badge: 'Vitamin B3',
+      description: isFrench
+        ? 'Hydratation botanique quotidienne et apaisement intensif aux extraits de plantes et Vitamine B3.'
+        : 'Daily herbal hydration and soothing barrier reinforcement engineered for warm weather comfort.',
+      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-200',
+    },
+    {
+      id: 'specialty',
+      name: isFrench ? 'Formules Spécialité' : 'Specialty Formulations',
+      badge: 'Specialty Formulations',
+      description: isFrench
+        ? 'Pâte de savon purifiante traditionnelle africaine et huile concentrée Snow White aux actifs purs.'
+        : 'Concentrated specialty treatments: Traditional African whipped paste soap and pure active Snow White oil.',
+      tagColor: 'bg-purple-100 text-purple-900 border-purple-200',
+    },
+  ];
+
+  const filterTabs = [
+    { id: 'All', label: isFrench ? 'Tous les produits (17)' : 'All Products (17)' },
+    { id: 'pink', label: isFrench ? 'Ligne Rose (5)' : 'Pink Line (5)' },
+    { id: 'brown', label: isFrench ? 'Ligne Marron (5)' : 'Brown Line (5)' },
+    { id: 'green', label: isFrench ? 'Ligne Verte (5)' : 'Green Line (5)' },
+    { id: 'specialty', label: isFrench ? 'Spécialités (2)' : 'Specialty (2)' },
+  ];
 
   const faqs = isFrench
     ? [
@@ -317,20 +356,16 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
             {t.shopSection.subtitle}
           </p>
 
-          {/* Category Pill Filters */}
+          {/* Color Line Filter Pills */}
           <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
-            {[
-              { id: 'All', label: isFrench ? 'Tous' : 'All Products' },
-              { id: 'Body', label: isFrench ? 'Corps' : 'Body Care' },
-              { id: 'Face', label: isFrench ? 'Visage' : 'Face Care' },
-              { id: 'Best Sellers', label: isFrench ? 'Meilleures Ventes' : 'Best Sellers' },
-            ].map(tab => (
+            {filterTabs.map(tab => (
               <button
                 key={tab.id}
-                onClick={() => setActiveCategory(tab.id as any)}
-                className={`text-xs font-semibold px-4 py-1.5 rounded-full transition-all ${
-                  activeCategory === tab.id
-                    ? 'bg-[#251409] text-white shadow-xs'
+                type="button"
+                onClick={() => setActiveLine(tab.id)}
+                className={`text-xs font-semibold px-4 py-2 rounded-full transition-all cursor-pointer ${
+                  activeLine === tab.id
+                    ? 'bg-[#251409] text-white shadow-sm'
                     : 'bg-white text-[#5A4D41] border border-[#E8DFC8] hover:border-[#251409]'
                 }`}
               >
@@ -340,31 +375,44 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
           </div>
         </div>
 
-        {/* Product Grid with embedded circular "VIEW MORE" card (from Skin Cafe reference) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredCollection.map(product => (
-            <ProductCard
-              key={product.sku}
-              product={product}
-              onQuickView={onQuickView}
-            />
-          ))}
+        {/* Color-Line Grouped Catalog Display (All 17 Products) */}
+        <div className="space-y-14">
+          {productLines
+            .filter(line => activeLine === 'All' || activeLine === line.id)
+            .map(line => {
+              const lineProducts = liveProducts.filter(p => p.colorLine === line.id);
+              if (lineProducts.length === 0) return null;
 
-          {/* Circular "VIEW ALL" Card (Skin Cafe Style) */}
-          <div
-            onClick={() => setCurrentTab('shop')}
-            className="bg-[#F4EDE2] rounded-3xl border border-[#E0D4C3] flex flex-col items-center justify-center p-8 text-center cursor-pointer hover:bg-[#EFE5D6] hover:shadow-md transition-all group aspect-square sm:aspect-auto"
-          >
-            <div className="w-24 h-24 rounded-full border border-[#251409]/30 flex flex-col items-center justify-center group-hover:scale-105 group-hover:border-[#251409] transition-all bg-white/60">
-              <span className="text-[11px] font-bold text-[#251409] uppercase tracking-wider">
-                {isFrench ? 'Voir Tout' : 'View All'}
-              </span>
-              <ArrowRight className="w-4 h-4 text-[#A32B1E] mt-1 group-hover:translate-x-1 transition-transform" />
-            </div>
-            <p className="font-serif text-sm font-bold text-[#251409] mt-4">
-              {isFrench ? 'Toute la Gamme Peau de Lune' : 'Explore Complete Collection'}
-            </p>
-          </div>
+              return (
+                <div key={line.id} className="space-y-5">
+                  {/* Line Header Banner */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8DFC8]">
+                    <div className="flex items-center gap-3">
+                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#251409]">
+                        {line.name}
+                      </h3>
+                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border shadow-xs ${line.tagColor}`}>
+                        {line.badge}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B5E51] max-w-md leading-relaxed">
+                      {line.description}
+                    </p>
+                  </div>
+
+                  {/* Grid for this Line */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {lineProducts.map(product => (
+                      <ProductCard
+                        key={product.sku}
+                        product={product}
+                        onQuickView={onQuickView}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </section>
 

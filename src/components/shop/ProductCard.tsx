@@ -17,8 +17,37 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
   const displayName = isFrench ? product.frenchName : product.name;
   const displayBenefit = isFrench ? product.benefitStatement.fr : product.benefitStatement.en;
 
+  const colorLineBadge = () => {
+    switch (product.colorLine) {
+      case 'pink':
+        return {
+          bg: 'bg-rose-100 text-rose-800 border-rose-200',
+          label: isFrench ? 'Ligne Rose · Rétinol + Vit C' : 'Pink Line · Retinol + Vit C',
+        };
+      case 'brown':
+        return {
+          bg: 'bg-amber-100 text-amber-900 border-amber-200',
+          label: isFrench ? 'Ligne Marron · Arbutine + Niacinamide' : 'Brown Line · Arbutin + Niacinamide',
+        };
+      case 'green':
+        return {
+          bg: 'bg-emerald-100 text-emerald-900 border-emerald-200',
+          label: isFrench ? 'Ligne Verte · Vitamine B3' : 'Green Line · Vitamin B3',
+        };
+      case 'specialty':
+        return {
+          bg: 'bg-purple-100 text-purple-900 border-purple-200',
+          label: isFrench ? 'Formule Spécialité' : 'Specialty Line',
+        };
+      default:
+        return null;
+    }
+  };
+
+  const lineInfo = colorLineBadge();
+
   return (
-    <div className="group relative bg-[#F7F3EC] rounded-3xl overflow-hidden border border-[#E8DFC8]/70 hover:border-[#C9A87C] transition-all duration-300 flex flex-col justify-between hover:shadow-lg">
+    <div className="product-card group relative bg-[#F7F3EC] rounded-3xl overflow-hidden border border-[#E8DFC8]/70 hover:border-[#C9A87C] transition-all duration-300 flex flex-col justify-between hover:shadow-lg">
       
       {/* Media Box */}
       <div
@@ -27,6 +56,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
       >
         {/* Wishlist Heart Icon (Inspired by Skin Cafe & Ariva) */}
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -38,6 +68,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
 
         {/* Badges */}
         <div className="absolute top-4 right-4 z-10 flex flex-col gap-1 items-end">
+          {lineInfo && (
+            <span className={`text-[8px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full border shadow-xs ${lineInfo.bg}`}>
+              {lineInfo.label}
+            </span>
+          )}
           {product.isBestSeller && (
             <span className="bg-[#251409] text-[#EADCC8] text-[9px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-xs">
               {isFrench ? 'Best Seller' : 'Best Seller'}
@@ -58,9 +93,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
           loading="lazy"
         />
 
+        {/* Studio Image Flag Notice */}
+        {product.imageFlag && (
+          <div className="absolute bottom-2 inset-x-2 bg-[#251409]/90 backdrop-blur-xs text-[#EADCC8] text-[9px] font-medium px-2 py-1 rounded-lg text-center shadow-xs z-10">
+            <span className="opacity-90">📷 {product.imageFlag}</span>
+          </div>
+        )}
+
         {/* Hover Quick View Pill */}
-        <div className="absolute bottom-3 inset-x-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+        <div className="absolute bottom-3 inset-x-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2 z-20">
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               onQuickView(product);
@@ -76,23 +119,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
       {/* Card Info */}
       <div className="p-5 flex flex-col flex-grow justify-between bg-white rounded-b-3xl">
         <div>
-          {/* Key Actives Pill */}
-          {product.keyActives.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-2">
-              {product.keyActives.slice(0, 1).map((active, idx) => (
-                <span
-                  key={idx}
-                  className="text-[9px] font-semibold text-[#603B1F] bg-[#FAF2E6] px-2 py-0.5 rounded-full flex items-center gap-1"
-                >
-                  <Sparkles className="w-2.5 h-2.5 text-[#C9A87C]" />
-                  {active}
-                </span>
-              ))}
-              <span className="text-[10px] text-[#8C6D4F] font-medium ml-auto">
-                {product.size}
+          {/* Key Actives Tags */}
+          <div className="product-actives-tags flex flex-wrap gap-1 mb-2 items-center">
+            {product.keyActives.map((active, idx) => (
+              <span
+                key={idx}
+                className="product-active-tag text-[9px] font-semibold text-[#603B1F] bg-[#FAF2E6] px-2 py-0.5 rounded-full flex items-center gap-1 border border-[#E8DFC8]/60"
+              >
+                <Sparkles className="w-2.5 h-2.5 text-[#C9A87C]" />
+                {active}
               </span>
-            </div>
-          )}
+            ))}
+            <span className="text-[10px] text-[#8C6D4F] font-medium ml-auto">
+              {product.size}
+            </span>
+          </div>
 
           {/* Title */}
           <h3
@@ -108,22 +149,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }
           </p>
         </div>
 
-        {/* Price & Add to Bag */}
-        <div className="pt-4 mt-4 border-t border-[#F2ECE4] flex items-center justify-between">
+        {/* Price & Action Buttons */}
+        <div className="pt-4 mt-4 border-t border-[#F2ECE4] flex items-center justify-between gap-2">
           <div>
-            <span className="font-serif text-lg font-bold text-[#251409]">
+            <span className="product-price font-serif text-lg font-bold text-[#251409]">
               ₦{product.retailPriceNgn.toLocaleString()}
             </span>
           </div>
 
-          <button
-            onClick={() => addToCart(product, 1)}
-            className="bg-[#251409] hover:bg-[#A32B1E] text-white p-2 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-xs active:scale-95"
-            aria-label={`Add ${displayName} to bag`}
-          >
-            <ShoppingBag className="w-3.5 h-3.5 text-[#EADCC8]" />
-            <span className="hidden sm:inline">{t.shopSection.addToBag}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => onQuickView(product)}
+              className="details-btn px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-[#251409] bg-[#EFE9DF] hover:bg-[#E2D8C7] transition-colors flex items-center gap-1 cursor-pointer"
+              aria-label={`Details for ${displayName}`}
+            >
+              <Eye className="w-3.5 h-3.5 text-[#8C6D4F]" />
+              <span className="hidden xs:inline">{isFrench ? 'Détails' : 'Details'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => addToCart(product, 1)}
+              className="add-to-bag-btn bg-[#251409] hover:bg-[#A32B1E] text-white px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-xs active:scale-95 cursor-pointer"
+              aria-label={`Add ${displayName} to bag`}
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-[#EADCC8]" />
+              <span>{t.shopSection.addToBag}</span>
+            </button>
+          </div>
         </div>
       </div>
 

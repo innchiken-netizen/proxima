@@ -4,23 +4,41 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Proxima — French formulation science. African understanding.</title>
-    <meta name="description" content="Body and face care formulated in France and built around African skin, heat and humidity. Sourced directly from our Trade Fair Complex flagship in Lagos, Nigeria." />
-    <meta name="keywords" content="Proxima, Peau de Lune, African skincare, French skincare, Lagos Trade Fair, Niacinamide, Arbutin, Body Lotion, Gel Douche" />
+    <title>Proxima Skincare — Complete 17-Product Catalog | Official Store</title>
+    <meta name="description" content="Explore all 17 Proxima formulations across the Pink Line (Retinol + Vit C), Brown Line (Arbutin + Niacinamide), Green Line (Vitamin B3), and Specialty Lines. Direct from Lagos." />
     
-    <!-- Open Graph / Social -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Proxima — French formulation science. African understanding." />
-    <meta property="og:description" content="Body and face care formulated in France and built around African skin, heat and humidity." />
-    <meta property="twitter:card" content="summary_large_image" />
-
-    <!-- Google Fonts: Fraunces (serif display) & Work Sans (sans body) -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              proxima: {
+                brown: '#603B1F',
+                'brown-deep': '#251409',
+                'brown-light': '#C9A87C',
+                'brown-pale': '#EFE9DF',
+                cream: '#FAF7F2',
+                red: '#A32B1E',
+                black: '#1C0F06'
+              }
+            },
+            fontFamily: {
+              serif: ['Fraunces', 'serif'],
+              sans: ['Work Sans', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-proxima-cream text-proxima-black font-sans antialiased selection:bg-proxima-brown-light selection:text-proxima-brown-deep">
-    <div id="root">
+  <body class="bg-[#FAF7F2] text-[#1C0F06] font-sans antialiased selection:bg-[#C9A87C] selection:text-[#251409]">
+    
     
     <header class="sticky top-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DFC8]/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -59,7 +77,9 @@
       </div>
     </header>
   
+
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+      <!-- Title Area -->
       <div class="max-w-3xl">
         <span class="text-[11px] font-bold uppercase tracking-widest text-[#C9A87C]">Official Store · Lagos Flagship</span>
         <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#251409] mt-1">
@@ -70,25 +90,42 @@
         </p>
       </div>
 
+      <!-- Guidance Banner -->
+      <div class="bg-gradient-to-r from-[#251409] via-[#603B1F] to-[#251409] text-[#FAF7F2] rounded-2xl p-4 sm:p-5 border border-[#C9A87C]/30 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-[#C9A87C]/20 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-[#C9A87C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-serif text-sm sm:text-base font-bold text-white">Not sure which product matches your skin condition?</h3>
+            <p class="text-xs text-[#EFE9DF]/80 mt-0.5">Message our Lagos skincare advisors directly on WhatsApp for tailored routine advice.</p>
+          </div>
+        </div>
+        <a href="https://wa.me/2349044943580?text=Hello%20Proxima%20I%20need%20product%20recommendations" target="_blank" rel="noopener noreferrer" class="bg-emerald-700 hover:bg-emerald-600 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition-colors shadow-xs flex items-center gap-2">
+          <span>Chat on WhatsApp</span>
+        </a>
+      </div>
+
       <!-- Color Line Filter Tabs -->
       <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-[#251409] text-white shadow-xs">
+        <button type="button" onclick="filterCatalog('All')" class="filter-btn active text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-[#251409] text-white shadow-xs" data-target="All">
           All Products (17)
         </button>
-        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
+        <button type="button" onclick="filterCatalog('pink')" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="pink">
           Pink Line · Retinol + C (5)
         </button>
-        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
+        <button type="button" onclick="filterCatalog('brown')" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="brown">
           Brown Line · Arbutin + Niacinamide (5)
         </button>
-        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
+        <button type="button" onclick="filterCatalog('green')" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="green">
           Green Line · Vitamin B3 (5)
         </button>
-        <button type="button" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap bg-white text-[#251409] border border-[#E8DFC8]">
+        <button type="button" onclick="filterCatalog('specialty')" class="filter-btn text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-all bg-white text-[#251409] border border-[#E8DFC8] hover:border-[#251409]" data-target="specialty">
           Specialty Line (2)
         </button>
       </div>
 
+      <!-- 17-Product Catalog (Grouped by Color Line) -->
       
     <div id="catalog-container" class="space-y-14">
       
@@ -1622,6 +1659,8 @@
         
     </div>
   
+
+      <!-- Wholesale Pricing Section -->
       
     <section id="wholesale-table-section" class="bg-white rounded-3xl p-6 sm:p-10 border border-[#E8DFC8]/80 shadow-md space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DFC8] pb-6">
@@ -1824,6 +1863,7 @@
     </section>
   
     </main>
+
     
     <footer class="bg-[#1C0F06] text-[#EADCC8] border-t border-[#382012] mt-24 py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -1867,7 +1907,192 @@
       </div>
     </footer>
   
-  </div>
-    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Cart Drawer Offcanvas Backdrop -->
+    <div id="cart-drawer-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 hidden transition-opacity" onclick="closeCartDrawer()"></div>
+
+    <!-- Cart Drawer Panel -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-[#FAF7F2] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-[#E8DFC8]">
+      <div class="p-5 border-b border-[#E8DFC8] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-[#251409]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <h2 class="font-serif text-lg font-bold text-[#251409]">Your Shopping Bag</h2>
+        </div>
+        <button type="button" onclick="closeCartDrawer()" class="p-2 text-[#251409]/70 hover:text-[#A32B1E] rounded-full hover:bg-[#EFE9DF] transition-colors" aria-label="Close Bag">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="p-5 border-t border-[#E8DFC8] bg-white space-y-4">
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-[#5A4D41]">Subtotal</span>
+          <span id="cart-subtotal" class="font-serif text-xl font-bold text-[#251409]">₦0</span>
+        </div>
+        <p class="text-[11px] text-[#8C6D4F]">Orders are finalized via our official Lagos WhatsApp team for instantaneous dispatch & pickup confirmation.</p>
+        <button type="button" onclick="checkoutWhatsApp()" class="w-full py-3.5 bg-[#251409] hover:bg-[#A32B1E] text-white rounded-xl font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-md">
+          <span>Checkout via WhatsApp</span>
+          <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.58 1.961.905 3.013.905h.001c3.182 0 5.768-2.587 5.769-5.766.001-3.182-2.585-5.768-5.768-5.768zm3.364 8.163c-.14.394-.816.757-1.12.788-.293.031-.663.044-2.12-.56-1.579-.652-2.597-2.271-2.678-2.379-.081-.107-.648-.865-.648-1.65 0-.786.406-1.173.55-1.332.143-.16.312-.2.417-.2.104 0 .209 0 .299.005.097.005.226-.037.353.268.13.313.442 1.077.481 1.156.039.08.065.173.013.28-.052.107-.078.174-.156.267-.078.093-.165.207-.235.279-.08.08-.163.167-.07.327.093.16.415.686.892 1.111.614.548 1.132.718 1.292.798.16.08.254.067.348-.04.094-.107.402-.468.51-.628.107-.16.214-.134.361-.08.147.053.93.439 1.09.519.16.08.267.12.306.187.039.067.039.387-.101.781z"/></svg>
+        </button>
+      </div>
+    </div>
+  
+    
+    <!-- Product Quick View Modal Backdrop -->
+    <div id="product-modal-backdrop" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4 transition-opacity" onclick="closeProductModal()">
+      <div id="product-modal" class="bg-[#FAF7F2] rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#E8DFC8] shadow-2xl p-6 sm:p-8 relative" onclick="event.stopPropagation()">
+        <button type="button" onclick="closeProductModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white border border-[#E8DFC8] flex items-center justify-center text-[#251409] hover:text-[#A32B1E] transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div id="modal-content" class="space-y-6">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  
+
+    <!-- Client-side Logic Script -->
+    <script>
+      const catalog = [{"sku":"PDL-LOTION-PINK","name":"Lait Peau de Lune — Florale Plus (Pink)","frenchName":"Lait Corporel Peau de Lune — Florale Plus (Rose)","category":"Body Lotion","colorLine":"pink","colorLabel":"Retinol + Vitamin C Line","size":"550ml","retailPriceNgn":7750,"casePriceNgn":75000,"caseQty":12,"image":"/images/product-body-lotion.jpg","keyActives":["Retinol","Vitamin C"],"benefit":"Smoothing antioxidant body lotion with Retinol and Vitamin C for radiant, firm skin in warm climates.","isBestSeller":true},{"sku":"PDL-OIL-PINK","name":"Huile Peau de Lune — Florale Plus (Pink)","frenchName":"Huile Corporelle Peau de Lune — Florale Plus (Rose)","category":"Body Oil","colorLine":"pink","colorLabel":"Retinol + Vitamin C Line","size":"300ml","retailPriceNgn":6500,"casePriceNgn":60000,"caseQty":12,"image":"/images/oil-pink-bottle.jpg","keyActives":["Retinol","Vitamin C"],"benefit":"Nourishing radiance elixir with active Retinol, Vitamin C, and Bulgarian Rose botanical oil.","isBestSeller":true},{"sku":"PDL-CREAM-PINK","name":"Crème de Visage Peau de Lune — Florale Plus (Pink)","frenchName":"Crème Visage Peau de Lune — Florale Plus (Rose)","category":"Face Cream","colorLine":"pink","colorLabel":"Retinol + Vitamin C Line","size":"50ml","retailPriceNgn":6917,"casePriceNgn":70000,"caseQty":12,"image":"/images/cream-pink-jar.jpg","keyActives":["Retinol","Vitamin C"],"benefit":"Velvety cellular renewal face cream to refine texture and boost natural collagen vitality in warm weather.","isBestSeller":false},{"sku":"PDL-GEL-PINK","name":"Gel Douche Gommant Peau de Lune — Florale Plus (Pink)","frenchName":"Gel Douche Gommant Peau de Lune — Florale Plus (Rose)","category":"Shower Gel","colorLine":"pink","colorLabel":"Retinol + Vitamin C Line","size":"1000ml","retailPriceNgn":8167,"casePriceNgn":85000,"caseQty":12,"image":"/images/product-shower-gel.jpg","keyActives":["Retinol","Vitamin C"],"benefit":"Exfoliating radiance body wash with micro-beads, Retinol, and Vitamin C for silky-smooth skin.","isBestSeller":false},{"sku":"PDL-SET-PINK","name":"Coffret Complet Florale Plus (Pink Line Set)","frenchName":"Coffret Rituel Complet Florale Plus (Ligne Rose)","category":"Complete Routine Set","colorLine":"pink","colorLabel":"Retinol + Vitamin C Line","size":"3-Piece Set (Lotion 550ml + Oil 300ml + Cream 50ml)","retailPriceNgn":19500,"casePriceNgn":190000,"caseQty":10,"image":"/images/cream-pink-jar.jpg","imageFlag":"Matching 3-piece set photo pending studio supply","isMatchingSetShot":false,"keyActives":["Retinol","Vitamin C"],"benefit":"Complete 3-step active smoothing ritual: Lotion, Radiant Glow Oil, and Face Cream.","isBestSeller":true},{"sku":"PDL-LOTION-BROWN","name":"Lait Peau de Lune — Clarifiant Intense (Brown)","frenchName":"Lait Corporel Peau de Lune — Clarifiant Intense (Marron)","category":"Body Lotion","colorLine":"brown","colorLabel":"Arbutin + Niacinamide Line","size":"550ml","retailPriceNgn":7750,"casePriceNgn":75000,"caseQty":12,"image":"/images/product-body-lotion.jpg","keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Advanced clarifying body milk with Alpha-Arbutin and Niacinamide for even-toned, luminous clarity.","isBestSeller":true},{"sku":"PDL-OIL-BROWN","name":"Huile Peau de Lune — Clarifiante Intense (Brown)","frenchName":"Huile Corporelle Peau de Lune — Clarifiante Intense (Marron)","category":"Body Oil","colorLine":"brown","colorLabel":"Arbutin + Niacinamide Line","size":"300ml","retailPriceNgn":6500,"casePriceNgn":60000,"caseQty":12,"image":"/images/product-body-oil.jpg","keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Silky tone-correcting body oil that locks in hydration and diminishes stubborn hyperpigmentation marks.","isBestSeller":true},{"sku":"PDL-CREAM-BROWN","name":"Crème de Visage Peau de Lune — Clarifiante Intense (Brown)","frenchName":"Crème Visage Peau de Lune — Clarifiante Intense (Marron)","category":"Face Cream","colorLine":"brown","colorLabel":"Arbutin + Niacinamide Line","size":"50ml","retailPriceNgn":6917,"casePriceNgn":70000,"caseQty":12,"image":"/images/product-face-cream.jpg","keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Targeted dark-spot balancing cream formulated with pharmaceutical-grade Niacinamide and pure Arbutin.","isBestSeller":false},{"sku":"PDL-GEL-BROWN","name":"Savon Noir Douche Peau de Lune — Clarifiant Intense (Brown)","frenchName":"Gel Douche Savon Noir Peau de Lune — Clarifiant Intense (Marron)","category":"Shower Gel","colorLine":"brown","colorLabel":"Arbutin + Niacinamide Line","size":"1000ml","retailPriceNgn":8167,"casePriceNgn":85000,"caseQty":12,"image":"/images/wash-brown-savon-noir.jpg","keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Traditional West African Savon Noir infused with Alpha-Arbutin and Niacinamide for a purifying clarifying bath ritual.","isBestSeller":false},{"sku":"PDL-SET-BROWN","name":"Coffret Complet Arbutine & Niacinamide (Brown Line Set)","frenchName":"Coffret Rituel Complet Arbutine & Niacinamide (Ligne Marron)","category":"Complete Routine Set","colorLine":"brown","colorLabel":"Arbutin + Niacinamide Line","size":"3-Piece Set (Lotion 550ml + Oil 300ml + Cream 50ml)","retailPriceNgn":19500,"casePriceNgn":190000,"caseQty":10,"image":"/images/product-face-cream.jpg","imageFlag":"Matching 3-piece set photo pending studio supply","isMatchingSetShot":false,"keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Synergistic 3-step clarifying routine for comprehensive tone correction and deep skin nourishment.","isBestSeller":true},{"sku":"PDL-LOTION-GREEN","name":"Lait Peau de Lune — Plantes Naturelles (Green)","frenchName":"Lait Corporel Peau de Lune — Plantes Naturelles (Vert)","category":"Body Lotion","colorLine":"green","colorLabel":"Vitamin B3 Line","size":"550ml","retailPriceNgn":7750,"casePriceNgn":75000,"caseQty":12,"image":"/images/lait-corps.svg","keyActives":["Vitamin B3"],"benefit":"Soothing botanical herbal body milk enriched with Vitamin B3 to comfort and hydrate skin in hot weather.","isBestSeller":false},{"sku":"PDL-OIL-GREEN","name":"Huile Peau de Lune — Plantes Naturelles (Green)","frenchName":"Huile Corporelle Peau de Lune — Plantes Naturelles (Vert)","category":"Body Oil","colorLine":"green","colorLabel":"Vitamin B3 Line","size":"300ml","retailPriceNgn":6500,"casePriceNgn":60000,"caseQty":12,"image":"/images/huile-corps.svg","keyActives":["Vitamin B3"],"benefit":"Lightweight dry botanical body oil with pure plant extracts and Vitamin B3 for supple, conditioned skin.","isBestSeller":false},{"sku":"PDL-CREAM-GREEN","name":"Crème de Visage Peau de Lune — Plantes Naturelles (Green)","frenchName":"Crème Visage Peau de Lune — Plantes Naturelles (Vert)","category":"Face Cream","colorLine":"green","colorLabel":"Vitamin B3 Line","size":"50ml","retailPriceNgn":6917,"casePriceNgn":70000,"caseQty":12,"image":"/images/creme-visage.svg","keyActives":["Vitamin B3"],"benefit":"Calming natural plant moisturiser with Vitamin B3 to balance sebum and fortify the delicate facial skin barrier.","isBestSeller":false},{"sku":"PDL-GEL-GREEN","name":"Gel Douche Peau de Lune — Plantes Naturelles (Green)","frenchName":"Gel Douche Peau de Lune — Plantes Naturelles (Vert)","category":"Shower Gel","colorLine":"green","colorLabel":"Vitamin B3 Line","size":"1000ml","retailPriceNgn":8167,"casePriceNgn":85000,"caseQty":12,"image":"/images/gel-douche.svg","keyActives":["Vitamin B3"],"benefit":"Refreshing botanical shower bath gel with natural plant extracts and Vitamin B3 for everyday skin comfort.","isBestSeller":false},{"sku":"PDL-SET-GREEN","name":"Coffret Complet Plantes Naturelles (Green Line Set)","frenchName":"Coffret Rituel Complet Plantes Naturelles (Ligne Verte)","category":"Complete Routine Set","colorLine":"green","colorLabel":"Vitamin B3 Line","size":"3-Piece Set (Lotion 550ml + Oil 300ml + Cream 50ml)","retailPriceNgn":19500,"casePriceNgn":190000,"caseQty":10,"image":"/images/set-green-bundle.jpg","isMatchingSetShot":true,"keyActives":["Vitamin B3"],"benefit":"The complete daily herbal routine: Body Lotion, Vitamin B3 Glow Oil, and Face Cream photographed together in one cohesive matching bundle.","isBestSeller":true},{"sku":"PDL-SOAP-MULATTO","name":"Mulatto Soap (Molato Soap)","frenchName":"Savon Mulatto Peau de Lune (Molato Soap)","category":"Specialty","colorLine":"specialty","colorLabel":"Specialty Formulations","size":"500g Jar","retailPriceNgn":12333,"casePriceNgn":130000,"caseQty":12,"image":"/images/soap-mulatto.jpg","keyActives":["Botanical Soap Base","Fruit Actives"],"benefit":"Deeply purifying, rich African clarifying paste soap for thorough body bathing rituals.","isNewArrival":true},{"sku":"PDL-OIL-SNOWWHITE","name":"Snow White Oil (Huile Éclat Luxe)","frenchName":"Huile Éclat Luxe Snow White — Actifs Purs","category":"Specialty","colorLine":"specialty","colorLabel":"Specialty Formulations","size":"150ml Dropper Bottle","retailPriceNgn":9500,"casePriceNgn":90000,"caseQty":12,"image":"/images/oil-snow-white.jpg","keyActives":["Alpha-Arbutin","Niacinamide"],"benefit":"Ultra-concentrated botanical radiance elixir described by its pure actives: Arbutin + Niacinamide.","isNewArrival":true}];
+      let cart = [];
+
+      function filterCatalog(line) {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          if (b.getAttribute('data-target') === line) {
+            b.classList.remove('bg-white', 'text-[#251409]', 'border', 'border-[#E8DFC8]');
+            b.classList.add('bg-[#251409]', 'text-white', 'shadow-xs');
+          } else {
+            b.classList.remove('bg-[#251409]', 'text-white', 'shadow-xs');
+            b.classList.add('bg-white', 'text-[#251409]', 'border', 'border-[#E8DFC8]');
+          }
+        });
+
+        document.querySelectorAll('.color-line-section').forEach(sec => {
+          if (line === 'All' || sec.getAttribute('data-line') === line) {
+            sec.style.display = 'block';
+          } else {
+            sec.style.display = 'none';
+          }
+        });
+      }
+
+      function addToBag(sku) {
+        const item = catalog.find(p => p.sku === sku);
+        if (!item) return;
+        const existing = cart.find(c => c.sku === sku);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ sku: item.sku, name: item.name, price: item.retailPriceNgn, image: item.image, size: item.size, qty: 1 });
+        }
+        updateCartUi();
+        openCartDrawer();
+      }
+
+      function updateCartUi() {
+        const totalCount = cart.reduce((acc, c) => acc + c.qty, 0);
+        const subtotal = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+        
+        document.getElementById('cart-counter-badge').textContent = totalCount;
+        document.getElementById('cart-subtotal').textContent = '₦' + subtotal.toLocaleString();
+
+        const container = document.getElementById('cart-items-container');
+        if (cart.length === 0) {
+          container.innerHTML = '<div class="text-center py-12 text-sm text-[#8C6D4F]">Your shopping bag is empty.</div>';
+          return;
+        }
+
+        container.innerHTML = cart.map(item => `
+          <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-[#E8DFC8]">
+            <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-contain rounded-xl bg-[#FAF7F2] p-1 border border-[#E8DFC8]/60" />
+            <div class="flex-1 min-w-0">
+              <h4 class="font-serif text-xs font-bold text-[#251409] truncate">${item.name}</h4>
+              <span class="text-[10px] text-[#8C6D4F]">${item.size}</span>
+              <div class="font-serif text-xs font-bold text-[#251409] mt-0.5">₦${(item.price * item.qty).toLocaleString()}</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="changeQty('${item.sku}', -1)" class="w-6 h-6 rounded-lg bg-[#FAF7F2] border border-[#E8DFC8] flex items-center justify-center text-xs font-bold">-</button>
+              <span class="text-xs font-bold">${item.qty}</span>
+              <button type="button" onclick="changeQty('${item.sku}', 1)" class="w-6 h-6 rounded-lg bg-[#FAF7F2] border border-[#E8DFC8] flex items-center justify-center text-xs font-bold">+</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function changeQty(sku, delta) {
+        const item = cart.find(c => c.sku === sku);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+          cart = cart.filter(c => c.sku !== sku);
+        }
+        updateCartUi();
+      }
+
+      function openCartDrawer() {
+        document.getElementById('cart-drawer-backdrop').classList.remove('hidden');
+        document.getElementById('cart-drawer').classList.remove('translate-x-full');
+      }
+
+      function closeCartDrawer() {
+        document.getElementById('cart-drawer-backdrop').classList.add('hidden');
+        document.getElementById('cart-drawer').classList.add('translate-x-full');
+      }
+
+      function openProductModal(sku) {
+        const p = catalog.find(item => item.sku === sku);
+        if (!p) return;
+        const modalContent = document.getElementById('modal-content');
+        modalContent.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="aspect-square bg-[#EFE9DF] rounded-2xl flex items-center justify-center p-6 border border-[#E8DFC8]">
+              <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain" />
+            </div>
+            <div class="space-y-4">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#A32B1E]">${p.colorLabel}</span>
+                <h3 class="font-serif text-xl font-bold text-[#251409] mt-0.5">${p.name}</h3>
+                <span class="text-xs text-[#8C6D4F]">${p.size} · ${p.category}</span>
+              </div>
+              <div class="font-serif text-2xl font-bold text-[#251409]">₦${p.retailPriceNgn.toLocaleString()}</div>
+              <p class="text-xs text-[#5A4D41] leading-relaxed">${p.benefit}</p>
+              <div class="space-y-1.5 pt-2 border-t border-[#E8DFC8]">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#8C6D4F]">Active Ingredients:</span>
+                <div class="flex flex-wrap gap-1">
+                  ${p.keyActives.map(a => `<span class="text-[10px] font-semibold text-[#603B1F] bg-[#FAF2E6] px-2.5 py-0.5 rounded-full border border-[#E8DFC8]">${a}</span>`).join('')}
+                </div>
+              </div>
+              <div class="pt-4">
+                <button type="button" onclick="addToBag('${p.sku}'); closeProductModal();" class="w-full py-3 bg-[#251409] hover:bg-[#A32B1E] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-md">
+                  Add to Bag — ₦${p.retailPriceNgn.toLocaleString()}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+        document.getElementById('product-modal-backdrop').classList.remove('hidden');
+      }
+
+      function closeProductModal() {
+        document.getElementById('product-modal-backdrop').classList.add('hidden');
+      }
+
+      function checkoutWhatsApp() {
+        if (cart.length === 0) return;
+        let msg = "Hello Proxima Lagos! I would like to order from your official catalog:\n\n";
+        cart.forEach(c => {
+          msg += `• ${c.qty}x ${c.name} (${c.size}) — ₦${(c.price * c.qty).toLocaleString()}\n`;
+        });
+        const subtotal = cart.reduce((acc, c) => acc + (c.price * c.qty), 0);
+        msg += `\nTotal: ₦${subtotal.toLocaleString()}\n\nPlease confirm stock availability and pickup / delivery details.`;
+        window.open('https://wa.me/2349044943580?text=' + encodeURIComponent(msg), '_blank');
+      }
+
+      // Initialize
+      updateCartUi();
+    </script>
   </body>
 </html>
