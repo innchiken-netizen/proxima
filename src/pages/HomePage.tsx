@@ -471,7 +471,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
             <div className="lg:col-span-4 flex flex-col items-center">
               <div className="relative w-64 h-80 rounded-3xl bg-gradient-to-b from-[#FAF6F0] to-[#EFE7DA] p-6 border border-[#E8DFC8] shadow-lg flex items-center justify-center">
                 <img
-                  src="/images/product-glow-oil.jpg"
+                  src="/images/proxima-oil-snowwhite.jpg"
                   alt="Proxima Active Glowing Oil"
                   className="w-full h-full object-contain transform hover:scale-105 transition-transform duration-500"
                 />
