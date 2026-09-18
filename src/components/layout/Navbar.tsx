@@ -10,7 +10,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => {
-  const { lang, setLang, t } = useLanguage();
+  const { lang, setLang, toggleLang, t } = useLanguage();
   const { totalCount, setIsCartOpen } = useCart();
   const { wishlistCount, setIsWishlistOpen } = useWishlist();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,20 +46,34 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
         </div>
 
         {/* Mobile Language Toggle */}
-        <div className="flex items-center gap-1 sm:hidden ml-2">
+        <div
+          onClick={toggleLang}
+          className="flex items-center gap-1 sm:hidden ml-2 cursor-pointer bg-white/10 px-2 py-0.5 rounded-full border border-[#EADCC8]/20 hover:bg-white/20 transition-all select-none"
+          title={lang === 'fr' ? 'Switch to English' : 'Passer en français'}
+          role="button"
+          tabIndex={0}
+        >
           <button
-            onClick={() => setLang('en')}
-            className={`px-1.5 py-0.5 text-[10px] uppercase font-bold rounded ${
-              lang === 'en' ? 'bg-[#C9A87C] text-[#251409]' : 'text-[#EADCC8]/60'
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLang('en');
+            }}
+            className={`px-1.5 py-0.5 text-[10px] uppercase font-bold rounded transition-all cursor-pointer ${
+              lang === 'en' ? 'bg-[#C9A87C] text-[#251409] shadow-xs' : 'text-[#EADCC8]/60 hover:text-white'
             }`}
           >
             EN
           </button>
-          <span className="text-[#C9A87C]/40 text-[10px]">|</span>
+          <span className="text-[#C9A87C]/40 text-[10px] pointer-events-none">|</span>
           <button
-            onClick={() => setLang('fr')}
-            className={`px-1.5 py-0.5 text-[10px] uppercase font-bold rounded ${
-              lang === 'fr' ? 'bg-[#C9A87C] text-[#251409]' : 'text-[#EADCC8]/60'
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLang('fr');
+            }}
+            className={`px-1.5 py-0.5 text-[10px] uppercase font-bold rounded transition-all cursor-pointer ${
+              lang === 'fr' ? 'bg-[#C9A87C] text-[#251409] shadow-xs' : 'text-[#EADCC8]/60 hover:text-white'
             }`}
           >
             FR
@@ -187,26 +201,48 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
             {/* Right Utilities */}
             <div className="flex items-center space-x-3 sm:space-x-5">
               {/* Desktop Language Switcher */}
-              <div className="hidden sm:flex items-center text-xs font-semibold bg-white px-2.5 py-1 rounded-full border border-[#E8DFC8]">
-                <Globe className="w-3.5 h-3.5 text-[#8C6D4F] mr-1.5" />
+              <div
+                onClick={toggleLang}
+                className="hidden sm:flex items-center text-xs font-semibold bg-white p-1 rounded-full border border-[#E8DFC8] cursor-pointer hover:border-[#C9A87C] transition-all shadow-xs select-none group"
+                title={lang === 'fr' ? 'Passer en anglais (Switch to English)' : 'Passer en français (Switch to French)'}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleLang();
+                  }
+                }}
+              >
+                <Globe className="w-3.5 h-3.5 text-[#8C6D4F] ml-1.5 mr-1 group-hover:rotate-12 transition-transform duration-300 pointer-events-none" />
                 <button
-                  onClick={() => setLang('en')}
-                  className={`px-1.5 py-0.5 rounded transition-colors ${
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLang('en');
+                  }}
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer ${
                     lang === 'en'
-                      ? 'bg-[#251409] text-white font-bold'
+                      ? 'bg-[#251409] text-white shadow-xs'
                       : 'text-[#6B5E51] hover:text-[#251409]'
                   }`}
+                  aria-label="English"
                 >
                   EN
                 </button>
-                <span className="text-[#E8DFC8] mx-0.5">|</span>
+                <span className="text-[#E8DFC8] mx-0.5 pointer-events-none">|</span>
                 <button
-                  onClick={() => setLang('fr')}
-                  className={`px-1.5 py-0.5 rounded transition-colors ${
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLang('fr');
+                  }}
+                  className={`px-2 py-0.5 rounded-full text-[11px] font-bold transition-all duration-200 cursor-pointer ${
                     lang === 'fr'
-                      ? 'bg-[#251409] text-white font-bold'
+                      ? 'bg-[#251409] text-white shadow-xs'
                       : 'text-[#6B5E51] hover:text-[#251409]'
                   }`}
+                  aria-label="Français"
                 >
                   FR
                 </button>

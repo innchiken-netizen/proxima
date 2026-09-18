@@ -27,11 +27,14 @@ const MainApp: React.FC = () => {
     const handleLocation = () => {
       const path = window.location.pathname.toLowerCase();
       
-      // Check language prefix if present e.g. /fr/... or /en/...
-      if (path.startsWith('/fr')) {
-        setLang('fr');
-      } else if (path.startsWith('/en')) {
-        setLang('en');
+      // Check language prefix on initial load only if no stored preference exists
+      const savedLang = localStorage.getItem('proxima_lang');
+      if (!savedLang) {
+        if (path.startsWith('/fr')) {
+          setLang('fr');
+        } else if (path.startsWith('/en')) {
+          setLang('en');
+        }
       }
 
       if (path.includes('shop')) {
@@ -55,6 +58,21 @@ const MainApp: React.FC = () => {
     window.addEventListener('popstate', handleLocation);
     return () => window.removeEventListener('popstate', handleLocation);
   }, [setLang]);
+
+  // Keep URL prefix synchronized when lang changes
+  useEffect(() => {
+    try {
+      const path = window.location.pathname;
+      const currentPrefix = lang === 'fr' ? '/fr' : '/en';
+      const otherPrefix = lang === 'fr' ? '/en' : '/fr';
+      if (path.startsWith(otherPrefix)) {
+        const newPath = path.replace(otherPrefix, currentPrefix);
+        window.history.replaceState({}, '', newPath);
+      }
+    } catch {
+      // ignore
+    }
+  }, [lang]);
 
   // Update URL on tab change without full reload
   const setCurrentTab = (tab: string) => {
