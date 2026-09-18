@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="100%" height="100%">
+  <defs>
+    <radialGradient id="faceGlowBg" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FDFBF7"/>
+      <stop offset="50%" stop-color="#EFE6D9"/>
+      <stop offset="100%" stop-color="#C9A87C"/>
+    </radialGradient>
+    <linearGradient id="skinMelanin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A76344"/>
+      <stop offset="35%" stop-color="#88492F"/>
+      <stop offset="70%" stop-color="#602F1C"/>
+      <stop offset="100%" stop-color="#411B0E"/>
+    </linearGradient>
+    <linearGradient id="luminousCheek" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75"/>
+      <stop offset="50%" stop-color="#F5DFB8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#88492F" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="goldCapJar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7E7B4"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#9E781B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1000" fill="url(#faceGlowBg)"/>
+
+  <!-- Face Profile / Cheek Close-Up -->
+  <g transform="translate(50, 100)">
+    <!-- Jawline & Cheek Area -->
+    <path d="M 150 150 
+             C 150 50, 420 50, 520 220 
+             C 600 360, 550 600, 420 720 
+             C 320 820, 200 800, 120 700 
+             Z" fill="url(#skinMelanin)"/>
+
+    <!-- Cheek Highlight: Glass Skin / Dewy Finish -->
+    <ellipse cx="420" cy="380" rx="90" ry="140" fill="url(#luminousCheek)" transform="rotate(-20 420 380)"/>
+    <ellipse cx="320" cy="240" rx="60" ry="80" fill="url(#luminousCheek)" transform="rotate(10 320 240)"/>
+    <ellipse cx="450" cy="360" rx="20" ry="35" fill="#FFFFFF" opacity="0.35" transform="rotate(-20 450 360)"/>
+
+    <!-- Hand & Fingers gently holding Face Cream Jar -->
+    <path d="M 450 680 C 480 600, 520 540, 560 520 L 590 580 C 550 640, 500 750, 470 820 Z" fill="url(#skinMelanin)"/>
+    <path d="M 490 620 C 530 550, 580 500, 620 480 L 645 530 C 600 580, 550 680, 520 750 Z" fill="url(#skinMelanin)"/>
+
+    <!-- Held Face Cream Jar (Crème Florale Plus) -->
+    <g transform="translate(480, 430)">
+      <!-- Lid -->
+      <ellipse cx="120" cy="40" rx="65" ry="16" fill="url(#goldCapJar)"/>
+      <path d="M 55 40 L 55 60 C 55 75, 185 75, 185 60 L 185 40 Z" fill="url(#goldCapJar)"/>
+      <ellipse cx="120" cy="60" rx="65" ry="16" fill="#9E781B"/>
+
+      <!-- Jar Body -->
+      <path d="M 60 65 L 65 160 C 65 190, 175 190, 175 160 L 180 65 Z" fill="#3A2318"/>
+      
+      <!-- Label -->
+      <rect x="75" y="85" width="90" height="70" rx="4" fill="#FAF6F0"/>
+      <text x="120" y="105" font-family="'Fraunces', serif" font-size="9" font-weight="700" fill="#251409" text-anchor="middle">PROXIMA</text>
+      <text x="120" y="120" font-family="'Fraunces', serif" font-size="7.5" font-style="italic" fill="#C9A87C" text-anchor="middle">Peau de Lune</text>
+      <text x="120" y="135" font-family="'Work Sans', sans-serif" font-size="6.5" font-weight="600" fill="#251409" text-anchor="middle">CRÈME VISAGE</text>
+    </g>
+  </g>
+
+  <!-- Editorial Badge Overlay -->
+  <rect x="60" y="850" width="680" height="90" rx="16" fill="#251409" opacity="0.88"/>
+  <text x="90" y="890" font-family="'Fraunces', serif" font-size="22" font-weight="500" fill="#F8F3EC">Moisture without heaviness.</text>
+  <text x="90" y="918" font-family="'Work Sans', sans-serif" font-size="13" font-weight="400" fill="#C9A87C">Deep cellular nourishment crafted specifically for heat &amp; humidity.</text>
+</svg>
