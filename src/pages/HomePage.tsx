@@ -105,7 +105,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
       ];
 
   return (
-    <div className="space-y-16 sm:space-y-24">
+    <div className="space-y-16 sm:space-y-24 pb-20 sm:pb-32">
       
       {/* 1. HERO SECTION (Inspired by Ariva & Skin Cafe) */}
       <section className="pt-6 sm:pt-10 pb-4">
