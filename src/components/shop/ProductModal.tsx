@@ -67,23 +67,23 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-proxima-black/70 backdrop-blur-sm overflow-y-auto animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-proxima-black/70 backdrop-blur-sm overflow-y-auto animate-fadeIn">
       <div
-        className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-proxima-brown-light/30 text-proxima-black"
+        className="relative bg-white rounded-2xl sm:rounded-3xl max-w-4xl w-full max-h-[94vh] overflow-y-auto overflow-x-hidden shadow-2xl border border-proxima-brown-light/30 text-proxima-black"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Sticky Header Close & WhatsApp Help Strip */}
-        <div className="sticky top-0 z-20 bg-proxima-brown-deep text-proxima-cream px-4 py-2.5 flex items-center justify-between border-b border-proxima-brown-light/20">
+        <div className="sticky top-0 z-20 bg-proxima-brown-deep text-proxima-cream px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between border-b border-proxima-brown-light/20 gap-2">
           <a
             href="https://wa.me/2349044943580"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-emerald-300 hover:text-emerald-200"
+            className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-emerald-300 hover:text-emerald-200 min-w-0 flex-1"
           >
-            <MessageCircle className="w-4 h-4 text-emerald-400" />
+            <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 flex-shrink-0" />
             <span className="font-medium truncate">{t.productDetail.needHelp}</span>
           </a>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <button
               type="button"
               onClick={() => toggleWishlist(product.sku)}
@@ -91,23 +91,23 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
               aria-label="Toggle favorite"
               title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
             >
-              <Heart className={`w-5 h-5 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
+              <Heart className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
             </button>
             <button
               onClick={onClose}
-              className="p-1 rounded-full text-proxima-cream/80 hover:text-white hover:bg-proxima-brown transition-colors"
+              className="p-1 rounded-full text-proxima-cream/80 hover:text-white hover:bg-proxima-brown transition-colors cursor-pointer"
               aria-label="Close modal"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
         </div>
 
-        <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="p-4 sm:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12">
           {/* Left: Product Visual Gallery */}
           <div className="flex flex-col">
             {/* Main Image Box */}
-            <div className="relative aspect-[3/4] bg-[#FAF7F2] rounded-2xl flex items-center justify-center border border-proxima-brown-light/20 shadow-inner overflow-hidden">
+            <div className="relative aspect-[3/4] max-h-[340px] sm:max-h-none mx-auto w-full bg-[#FAF7F2] rounded-2xl flex items-center justify-center border border-proxima-brown-light/20 shadow-inner overflow-hidden">
               <img
                 src={gallery[activeImgIndex]}
                 alt={`${displayName} - View ${activeImgIndex + 1}`}
@@ -283,43 +283,63 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
             </div>
 
             {/* Purchase Row */}
-            <div className="pt-6 border-t border-proxima-brown-light/20 space-y-3">
-              <div className="flex items-center gap-4">
-                {/* Quantity Control */}
-                <div className="flex items-center border border-proxima-brown-light/30 rounded-xl bg-proxima-cream/40 px-2 py-1">
+            <div className="pt-5 sm:pt-6 border-t border-proxima-brown-light/20 space-y-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex items-center gap-2">
+                  {/* Quantity Control */}
+                  <div className="flex items-center border border-proxima-brown-light/30 rounded-xl bg-proxima-cream/40 px-2 py-1.5 flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-1 text-proxima-brown hover:text-proxima-black cursor-pointer"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="w-8 text-center text-sm font-bold text-proxima-brown-deep">
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-1 text-proxima-brown hover:text-proxima-black cursor-pointer"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  {/* Wishlist Toggle Button (Mobile: beside quantity) */}
                   <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-1 text-proxima-brown hover:text-proxima-black"
-                    aria-label="Decrease quantity"
+                    type="button"
+                    onClick={() => toggleWishlist(product.sku)}
+                    className={`sm:hidden p-2.5 rounded-xl border transition-all flex items-center justify-center cursor-pointer ${
+                      isFavorite
+                        ? 'bg-[#A32B1E]/10 border-[#A32B1E] text-[#A32B1E]'
+                        : 'bg-[#FAF7F2] border-[#E8DFC8] text-[#251409]/70 hover:border-[#A32B1E] hover:text-[#A32B1E]'
+                    }`}
+                    title={isFavorite ? (isFrench ? 'Retirer des favoris' : 'Remove from favorites') : (isFrench ? 'Ajouter aux favoris' : 'Add to favorites')}
+                    aria-label="Wishlist"
                   >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="w-8 text-center text-sm font-bold text-proxima-brown-deep">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="p-1 text-proxima-brown hover:text-proxima-black"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
+                    <Heart className={`w-5 h-5 transition-transform ${isFavorite ? 'fill-[#A32B1E] text-[#A32B1E]' : ''}`} />
                   </button>
                 </div>
 
                 {/* Add to Bag CTA */}
                 <button
+                  type="button"
                   onClick={handleAddToCart}
-                  className="flex-1 bg-proxima-brown hover:bg-proxima-red text-white py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
+                  className="flex-1 bg-proxima-brown hover:bg-proxima-red text-white py-3 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer min-w-0"
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{t.productDetail.addToCart} — ₦{(product.retailPriceNgn * quantity).toLocaleString()}</span>
+                  <ShoppingBag className="w-4 h-4 flex-shrink-0" />
+                  <span className="truncate">{t.productDetail.addToCart} — ₦{(product.retailPriceNgn * quantity).toLocaleString()}</span>
                 </button>
 
-                {/* Wishlist Toggle Button */}
+                {/* Wishlist Toggle Button (Desktop) */}
                 <button
                   type="button"
                   onClick={() => toggleWishlist(product.sku)}
-                  className={`p-3 rounded-xl border transition-all flex items-center justify-center cursor-pointer ${
+                  className={`hidden sm:flex p-3 rounded-xl border transition-all items-center justify-center cursor-pointer flex-shrink-0 ${
                     isFavorite
                       ? 'bg-[#A32B1E]/10 border-[#A32B1E] text-[#A32B1E]'
                       : 'bg-[#FAF7F2] border-[#E8DFC8] text-[#251409]/70 hover:border-[#A32B1E] hover:text-[#A32B1E]'
@@ -336,10 +356,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, on
                 href={getDirectWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-emerald-700 hover:bg-emerald-600 text-white py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+                className="w-full bg-emerald-700 hover:bg-emerald-600 text-white py-2.5 px-4 rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>{t.productDetail.buyViaWhatsApp}</span>
+                <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                <span className="truncate">{t.productDetail.buyViaWhatsApp}</span>
               </a>
             </div>
 

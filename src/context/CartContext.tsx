@@ -2,6 +2,12 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem } from '../types';
 import { useLanguage } from './LanguageContext';
 
+export interface CustomerOrderInfo {
+  name?: string;
+  address?: string;
+  phone?: string;
+}
+
 interface CartContextType {
   cart: CartItem[];
   addToCart: (product: Product, quantity?: number, selectedVariant?: string) => void;
@@ -12,7 +18,7 @@ interface CartContextType {
   subtotalNgn: number;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
-  getWhatsAppOrderUrl: () => string;
+  getWhatsAppOrderUrl: (customerInfo?: CustomerOrderInfo) => string;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -79,7 +85,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const totalCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   const subtotalNgn = cart.reduce((acc, item) => acc + item.product.retailPriceNgn * item.quantity, 0);
 
-  const getWhatsAppOrderUrl = () => {
+  const getWhatsAppOrderUrl = (customerInfo?: CustomerOrderInfo) => {
     const phoneNumber = '2349044943580';
     if (cart.length === 0) {
       return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -98,10 +104,20 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       )
       .join('\n');
 
+    const hasInfo = customerInfo?.name?.trim() || customerInfo?.address?.trim() || customerInfo?.phone?.trim();
+
+    const customerDetailsFr = hasInfo
+      ? `\n\n*Coordonnées du client :*\n👤 Nom : ${customerInfo?.name?.trim() || 'Non renseigné'}\n📍 Adresse de livraison : ${customerInfo?.address?.trim() || 'Non renseignée'}${customerInfo?.phone?.trim() ? `\n📞 Téléphone : ${customerInfo.phone.trim()}` : ''}`
+      : `\n\nNom :\nAdresse de livraison :\nVille / État :`;
+
+    const customerDetailsEn = hasInfo
+      ? `\n\n*Customer Details:*\n👤 Name: ${customerInfo?.name?.trim() || 'Not provided'}\n📍 Delivery Address: ${customerInfo?.address?.trim() || 'Not provided'}${customerInfo?.phone?.trim() ? `\n📞 Phone: ${customerInfo.phone.trim()}` : ''}`
+      : `\n\nName:\nDelivery Address:\nCity / State:`;
+
     const message =
       lang === 'fr'
-        ? `Bonjour l'équipe Proxima,\n\nJe souhaite passer la commande suivante depuis votre boutique en ligne :\n\n${itemsSummary}\n\n*Total : ₦${subtotalNgn.toLocaleString()}*\n\nNom :\nAdresse de livraison :\nVille / État :\n\nMerci de me confirmer la disponibilité et les modalités de paiement.`
-        : `Hello Proxima Team,\n\nI would like to place an order from your website:\n\n${itemsSummary}\n\n*Total: ₦${subtotalNgn.toLocaleString()}*\n\nName:\nDelivery Address:\nCity / State:\n\nPlease confirm product availability and payment details.`;
+        ? `Bonjour l'équipe Proxima,\n\nJe souhaite passer la commande suivante depuis votre boutique en ligne :\n\n${itemsSummary}\n\n*Total : ₦${subtotalNgn.toLocaleString()}*${customerDetailsFr}\n\nMerci de me confirmer la disponibilité et les modalités de paiement.`
+        : `Hello Proxima Team,\n\nI would like to place an order from your website:\n\n${itemsSummary}\n\n*Total: ₦${subtotalNgn.toLocaleString()}*${customerDetailsEn}\n\nPlease confirm product availability and payment details.`;
 
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };

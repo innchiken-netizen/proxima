@@ -131,7 +131,7 @@ const MainApp: React.FC = () => {
       />
 
       {/* Floating WhatsApp Concierge Button */}
-      <FloatingWhatsApp />
+      <FloatingWhatsApp isModalOpen={!!modalProduct} />
 
       {/* Master Footer */}
       <Footer setCurrentTab={setCurrentTab} />

@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Sparkles, Package, HelpCircle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import { useCart } from '../../context/CartContext';
+import { useWishlist } from '../../context/WishlistContext';
 
-export const FloatingWhatsApp: React.FC = () => {
+export const FloatingWhatsApp: React.FC<{ isModalOpen?: boolean }> = ({ isModalOpen = false }) => {
   const { lang } = useLanguage();
+  const { isCartOpen } = useCart();
+  const { isWishlistOpen } = useWishlist();
   const [isOpen, setIsOpen] = useState(false);
+
+  // Hide button whenever any modal or drawer is active to avoid overlapping content
+  if (isCartOpen || isWishlistOpen || isModalOpen) {
+    return null;
+  }
 
   const getChatUrl = (customText: string) => {
     return `https://wa.me/2349044943580?text=${encodeURIComponent(customText)}`;
   };
 
   return (
-    <div className="fixed bottom-6 right-5 z-50 flex flex-col items-end">
+    <div className="fixed bottom-6 right-5 z-40 flex flex-col items-end">
       {/* Quick Option Menu */}
       {isOpen && (
         <div className="mb-3 bg-proxima-brown-deep border border-proxima-brown-light/30 rounded-2xl shadow-luxury-lg p-4 w-72 text-proxima-cream animate-slideUp backdrop-blur-md">

@@ -1,11 +1,60 @@
-import React from 'react';
-import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight, MessageCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, ShoppingBag, Plus, Minus, Trash2, ArrowRight, MessageCircle, User, MapPin, Phone } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const CartDrawer: React.FC = () => {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, clearCart, subtotalNgn, getWhatsAppOrderUrl } = useCart();
   const { lang, t } = useLanguage();
+  const isFrench = lang === 'fr';
+
+  const [customerName, setCustomerName] = useState(() => {
+    try {
+      return localStorage.getItem('proxima_customer_name') || '';
+    } catch {
+      return '';
+    }
+  });
+
+  const [customerAddress, setCustomerAddress] = useState(() => {
+    try {
+      return localStorage.getItem('proxima_customer_address') || '';
+    } catch {
+      return '';
+    }
+  });
+
+  const [customerPhone, setCustomerPhone] = useState(() => {
+    try {
+      return localStorage.getItem('proxima_customer_phone') || '';
+    } catch {
+      return '';
+    }
+  });
+
+  const [showValidation, setShowValidation] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (customerName) localStorage.setItem('proxima_customer_name', customerName);
+      if (customerAddress) localStorage.setItem('proxima_customer_address', customerAddress);
+      if (customerPhone) localStorage.setItem('proxima_customer_phone', customerPhone);
+    } catch {
+      // ignore
+    }
+  }, [customerName, customerAddress, customerPhone]);
+
+  const handleCheckoutWhatsApp = () => {
+    if (!customerName.trim() || !customerAddress.trim()) {
+      setShowValidation(true);
+    }
+    const url = getWhatsAppOrderUrl({
+      name: customerName.trim(),
+      address: customerAddress.trim(),
+      phone: customerPhone.trim(),
+    });
+    window.open(url, '_blank');
+  };
 
   if (!isCartOpen) return null;
 
@@ -17,11 +66,11 @@ export const CartDrawer: React.FC = () => {
         onClick={() => setIsCartOpen(false)}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white shadow-2xl border-l border-proxima-brown-light/20 flex flex-col justify-between">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+        <div className="w-screen max-w-full sm:max-w-md bg-white shadow-2xl border-l border-proxima-brown-light/20 flex flex-col justify-between">
           
           {/* Header */}
-          <div className="p-5 sm:p-6 bg-proxima-brown-deep text-proxima-cream border-b border-proxima-brown-light/20 flex items-center justify-between">
+          <div className="p-4 sm:p-6 bg-proxima-brown-deep text-proxima-cream border-b border-proxima-brown-light/20 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <ShoppingBag className="w-5 h-5 text-proxima-brown-light" />
               <h2 className="font-serif text-lg font-bold tracking-wide">
@@ -127,12 +176,82 @@ export const CartDrawer: React.FC = () => {
 
           {/* Footer & Checkout CTA */}
           {cart.length > 0 && (
-            <div className="p-5 sm:p-6 bg-proxima-cream/70 border-t border-proxima-brown-light/20 space-y-3.5">
-              <div className="flex items-center justify-between text-sm">
+            <div className="p-4 sm:p-6 bg-proxima-cream/70 border-t border-proxima-brown-light/20 space-y-3.5">
+              <div className="flex items-center justify-between text-sm gap-2">
                 <span className="font-medium text-proxima-brown-deep">{t.cart.subtotal}</span>
-                <span className="font-serif text-2xl font-bold text-proxima-red">
+                <span className="font-serif text-xl sm:text-2xl font-bold text-proxima-red whitespace-nowrap">
                   ₦{subtotalNgn.toLocaleString()}
                 </span>
+              </div>
+
+              {/* Formulaire Coordonnées Client */}
+              <div className="bg-white rounded-2xl p-3 sm:p-4 border border-proxima-brown-light/30 shadow-2xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-proxima-brown-deep">
+                    <User className="w-3.5 h-3.5 text-proxima-brown" />
+                    <span>{isFrench ? 'Coordonnées de livraison' : 'Delivery Details'}</span>
+                  </div>
+                  <span className="text-[10px] text-proxima-black/50 font-medium">
+                    {isFrench ? 'Pour votre commande' : 'For your order'}
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={customerName}
+                      onChange={(e) => {
+                        setCustomerName(e.target.value);
+                        if (showValidation) setShowValidation(false);
+                      }}
+                      placeholder={isFrench ? 'Nom et Prénom *' : 'Full Name *'}
+                      className={`w-full text-xs p-2.5 pl-8 rounded-xl border bg-[#FAF7F2]/60 focus:bg-white focus:outline-none transition-colors ${
+                        showValidation && !customerName.trim()
+                          ? 'border-red-400 bg-red-50/50'
+                          : 'border-proxima-brown-light/30 focus:border-proxima-brown'
+                      }`}
+                    />
+                    <User className="w-3.5 h-3.5 text-proxima-brown/50 absolute left-2.5 top-3 pointer-events-none" />
+                  </div>
+
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={customerAddress}
+                      onChange={(e) => {
+                        setCustomerAddress(e.target.value);
+                        if (showValidation) setShowValidation(false);
+                      }}
+                      placeholder={isFrench ? 'Adresse & Ville (ex: Victoria Island, Lagos) *' : 'Address & City (e.g. Victoria Island, Lagos) *'}
+                      className={`w-full text-xs p-2.5 pl-8 rounded-xl border bg-[#FAF7F2]/60 focus:bg-white focus:outline-none transition-colors ${
+                        showValidation && !customerAddress.trim()
+                          ? 'border-red-400 bg-red-50/50'
+                          : 'border-proxima-brown-light/30 focus:border-proxima-brown'
+                      }`}
+                    />
+                    <MapPin className="w-3.5 h-3.5 text-proxima-brown/50 absolute left-2.5 top-3 pointer-events-none" />
+                  </div>
+
+                  <div className="relative">
+                    <input
+                      type="tel"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      placeholder={isFrench ? 'Téléphone / WhatsApp (optionnel)' : 'Phone / WhatsApp (optional)'}
+                      className="w-full text-xs p-2.5 pl-8 rounded-xl border border-proxima-brown-light/30 bg-[#FAF7F2]/60 focus:bg-white focus:outline-none focus:border-proxima-brown transition-colors"
+                    />
+                    <Phone className="w-3.5 h-3.5 text-proxima-brown/50 absolute left-2.5 top-3 pointer-events-none" />
+                  </div>
+                </div>
+
+                {showValidation && (!customerName.trim() || !customerAddress.trim()) && (
+                  <p className="text-[10px] text-red-600 font-medium">
+                    {isFrench
+                      ? '⚠️ Veuillez renseigner votre nom et adresse pour la livraison.'
+                      : '⚠️ Please enter your name and delivery address.'}
+                  </p>
+                )}
               </div>
 
               <p className="text-[11px] text-proxima-black/60 leading-tight">
@@ -140,27 +259,26 @@ export const CartDrawer: React.FC = () => {
               </p>
 
               {/* Checkout via WhatsApp Button */}
-              <a
-                href={getWhatsAppOrderUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-emerald-700 hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors"
+              <button
+                type="button"
+                onClick={handleCheckoutWhatsApp}
+                className="w-full bg-emerald-700 hover:bg-emerald-600 text-white py-3.5 px-4 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4" />
-                <span>{t.cart.checkoutWhatsApp}</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
+                <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                <span className="truncate">{t.cart.checkoutWhatsApp}</span>
+                <ArrowRight className="w-4 h-4 flex-shrink-0" />
+              </button>
 
               <div className="flex items-center justify-between pt-1">
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="text-xs text-proxima-brown hover:underline font-medium"
+                  className="text-xs text-proxima-brown hover:underline font-medium cursor-pointer"
                 >
                   {t.cart.continueShopping}
                 </button>
                 <button
                   onClick={clearCart}
-                  className="text-[11px] text-proxima-black/40 hover:text-proxima-red"
+                  className="text-[11px] text-proxima-black/40 hover:text-proxima-red cursor-pointer"
                 >
                   {t.cart.clear}
                 </button>
