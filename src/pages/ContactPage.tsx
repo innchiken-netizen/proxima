@@ -110,13 +110,57 @@ export const ContactPage: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-proxima-cream flex items-center justify-center text-proxima-brown flex-shrink-0 mt-1">
                 <Instagram className="w-6 h-6" />
               </div>
-              <div>
-                <h3 className="font-serif text-base font-bold text-proxima-brown-deep">
-                  {t.contact.socialTitle}
-                </h3>
-                <p className="text-xs text-proxima-black/70 mt-0.5">
-                  {t.contact.social}
-                </p>
+              <div className="space-y-2">
+                <div>
+                  <h3 className="font-serif text-base font-bold text-proxima-brown-deep">
+                    {t.contact.socialTitle}
+                  </h3>
+                  <p className="text-xs text-proxima-black/70 mt-0.5">
+                    {t.contact.social}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <a
+                    href="https://instagram.com/proximasarl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFC8] text-xs font-semibold text-[#251409] hover:border-[#C9A87C] hover:bg-white transition-all shadow-2xs"
+                  >
+                    <span>Instagram</span>
+                  </a>
+                  <a
+                    href="https://tiktok.com/@proximasarl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFC8] text-xs font-semibold text-[#251409] hover:border-[#C9A87C] hover:bg-white transition-all shadow-2xs"
+                  >
+                    <span>TikTok</span>
+                  </a>
+                  <a
+                    href="https://facebook.com/proximasarl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFC8] text-xs font-semibold text-[#251409] hover:border-[#C9A87C] hover:bg-white transition-all shadow-2xs"
+                  >
+                    <span>Facebook</span>
+                  </a>
+                  <a
+                    href="https://x.com/proximasarl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#E8DFC8] text-xs font-semibold text-[#251409] hover:border-[#C9A87C] hover:bg-white transition-all shadow-2xs"
+                  >
+                    <span>X (Twitter)</span>
+                  </a>
+                  <a
+                    href="https://wa.me/2349044943580"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-all shadow-2xs"
+                  >
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
 
