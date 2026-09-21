@@ -131,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentTab }) => {
               </li>
               <li>
                 <button
-                  onClick={() => handleLink('routine')}
+                  onClick={() => handleLink('quiz')}
                   className="hover:text-proxima-brown-light transition-colors text-proxima-brown-light font-medium"
                 >
                   ✦ {t.nav.findRoutine}

@@ -124,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
                   onMouseEnter={() => setDiscoverDropdown(true)}
                   onClick={() => setDiscoverDropdown(!discoverDropdown)}
                   className={`flex items-center gap-1 py-1 transition-colors ${
-                    currentTab === 'routine' || currentTab === 'ingredients'
+                    currentTab === 'quiz' || currentTab === 'routine' || currentTab === 'ingredients'
                       ? 'text-[#A32B1E]'
                       : 'text-[#251409]/80 hover:text-[#A32B1E]'
                   }`}
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
                   <div className="absolute top-full left-0 w-64 pt-2 z-50 animate-fadeIn">
                     <div className="bg-white border border-[#E8DFC8] rounded-2xl shadow-xl p-2.5 backdrop-blur-md">
                       <button
-                        onClick={() => handleNavClick('routine')}
+                        onClick={() => handleNavClick('quiz')}
                         className="w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium text-[#251409] hover:bg-[#FAF7F2] hover:text-[#A32B1E] transition-all flex flex-col"
                       >
                         <span className="font-bold">{t.nav.findRoutine}</span>
@@ -302,7 +302,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab }) => 
                 {t.nav.shop}
               </button>
               <button
-                onClick={() => handleNavClick('routine')}
+                onClick={() => handleNavClick('quiz')}
                 className="text-left py-2 px-3 rounded-xl text-sm font-semibold text-[#251409] hover:bg-[#FAF7F2] flex items-center justify-between"
               >
                 <span>{t.nav.findRoutine}</span>

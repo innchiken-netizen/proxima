@@ -39,8 +39,8 @@ const MainApp: React.FC = () => {
 
       if (path.includes('shop')) {
         setCurrentTabState('shop');
-      } else if (path.includes('routine')) {
-        setCurrentTabState('routine');
+      } else if (path.includes('quiz') || path.includes('routine')) {
+        setCurrentTabState('quiz');
       } else if (path.includes('story') || path.includes('about')) {
         setCurrentTabState('story');
       } else if (path.includes('ingredients')) {
@@ -76,9 +76,10 @@ const MainApp: React.FC = () => {
 
   // Update URL on tab change without full reload
   const setCurrentTab = (tab: string) => {
-    setCurrentTabState(tab);
+    const normalizedTab = tab === 'routine' ? 'quiz' : tab;
+    setCurrentTabState(normalizedTab);
     const prefix = lang === 'fr' ? '/fr' : '/en';
-    const newPath = tab === 'home' ? `${prefix}/` : `${prefix}/${tab}`;
+    const newPath = normalizedTab === 'home' ? `${prefix}/` : `${prefix}/${normalizedTab}`;
     try {
       window.history.pushState({}, '', newPath);
     } catch {
@@ -103,7 +104,7 @@ const MainApp: React.FC = () => {
         {currentTab === 'shop' && (
           <ShopPage setCurrentTab={setCurrentTab} onQuickView={handleQuickView} />
         )}
-        {currentTab === 'routine' && (
+        {(currentTab === 'quiz' || currentTab === 'routine') && (
           <RoutinePage onQuickView={handleQuickView} />
         )}
         {currentTab === 'story' && (

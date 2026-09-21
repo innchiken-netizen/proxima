@@ -119,7 +119,7 @@ export const ShopPage: React.FC<ShopPageProps> = ({ setCurrentTab, onQuickView }
 
         <div className="flex items-center gap-2.5 flex-shrink-0 w-full sm:w-auto">
           <button
-            onClick={() => setCurrentTab('routine')}
+            onClick={() => setCurrentTab('quiz')}
             className="flex-1 sm:flex-initial bg-proxima-brown-light hover:bg-white text-proxima-brown-deep font-semibold text-xs px-4 py-2.5 rounded-xl transition-colors shadow-xs"
           >
             {t.shopSection.guidanceAction}

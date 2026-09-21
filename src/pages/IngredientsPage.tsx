@@ -160,7 +160,7 @@ export const IngredientsPage: React.FC<IngredientsPageProps> = ({ onQuickView, s
               {isFrench ? 'Besoin d’associer ces actifs à vos besoins ?' : 'Ready to match these actives to your skin goals?'}
             </span>
             <button
-              onClick={() => setCurrentTab('routine')}
+              onClick={() => setCurrentTab('quiz')}
               className="bg-proxima-brown hover:bg-proxima-red text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors"
             >
               <span>{t.quiz.badge}</span>

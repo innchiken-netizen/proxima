@@ -107,7 +107,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
                   </button>
 
                   <button
-                    onClick={() => setCurrentTab('routine')}
+                    onClick={() => setCurrentTab('quiz')}
                     className="bg-white hover:bg-[#FAF7F2] text-[#251409] border border-[#D5C6B3] px-6 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transition-colors shadow-xs flex items-center gap-2"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-[#C9A87C]" />
@@ -189,7 +189,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
           
           {/* Bento Card 1: Personalized Skincare */}
           <div
-            onClick={() => setCurrentTab('routine')}
+            onClick={() => setCurrentTab('quiz')}
             className="group bg-white rounded-3xl p-6 border border-[#E8DFC8]/80 hover:border-[#C9A87C] hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             <div className="flex items-start justify-between">
