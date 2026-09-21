@@ -14,57 +14,17 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
   const { lang, t } = useLanguage();
   const isFrench = lang === 'fr';
 
-  const [activeLine, setActiveLine] = useState<string>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const featuredOilProduct = liveProducts.find(p => p.sku === 'PDL-OIL-PINK') || liveProducts[0];
 
-  const productLines = [
-    {
-      id: 'pink',
-      name: isFrench ? 'Ligne Rose · Rétinol + Vitamine C' : 'Pink Line · Retinol + Vitamin C',
-      badge: 'Retinol + Vitamin C',
-      description: isFrench
-        ? 'Formule lissante et antioxydante au Rétinol à libération prolongée et Vitamine C.'
-        : 'Cellular renewal and antioxidant protection formulated for radiant, firm skin in tropical heat.',
-      tagColor: 'bg-rose-100 text-rose-800 border-rose-200',
-    },
-    {
-      id: 'brown',
-      name: isFrench ? 'Ligne Marron · Alpha-Arbutine + Niacinamide' : 'Brown Line · Arbutin + Niacinamide',
-      badge: 'Alpha-Arbutin + Niacinamide',
-      description: isFrench
-        ? 'Clarification cutanée ciblée et respectueuse de la barrière : unifie le teint sans agents agressifs.'
-        : 'Clarifying precision without toxic bleaching agents. Fades dark marks and unifies tone safely.',
-      tagColor: 'bg-amber-100 text-amber-900 border-amber-200',
-    },
-    {
-      id: 'green',
-      name: isFrench ? 'Ligne Verte · Vitamine B3' : 'Green Line · Vitamin B3',
-      badge: 'Vitamin B3',
-      description: isFrench
-        ? 'Hydratation botanique quotidienne et apaisement intensif aux extraits de plantes et Vitamine B3.'
-        : 'Daily herbal hydration and soothing barrier reinforcement engineered for warm weather comfort.',
-      tagColor: 'bg-emerald-100 text-emerald-900 border-emerald-200',
-    },
-    {
-      id: 'specialty',
-      name: isFrench ? 'Formules Spécialité' : 'Specialty Formulations',
-      badge: 'Specialty Formulations',
-      description: isFrench
-        ? 'Pâte de savon purifiante traditionnelle africaine et huile concentrée Snow White aux actifs purs.'
-        : 'Concentrated specialty treatments: Traditional African whipped paste soap and pure active Snow White oil.',
-      tagColor: 'bg-purple-100 text-purple-900 border-purple-200',
-    },
-  ];
-
-  const filterTabs = [
-    { id: 'All', label: isFrench ? 'Tous les produits (17)' : 'All Products (17)' },
-    { id: 'pink', label: isFrench ? 'Ligne Rose (5)' : 'Pink Line (5)' },
-    { id: 'brown', label: isFrench ? 'Ligne Marron (5)' : 'Brown Line (5)' },
-    { id: 'green', label: isFrench ? 'Ligne Verte (5)' : 'Green Line (5)' },
-    { id: 'specialty', label: isFrench ? 'Spécialités (2)' : 'Specialty (2)' },
-  ];
+  // Curated 4 Bestsellers for the Homepage Welcome (1 representative item per line + specialty)
+  const featuredBestsellers = [
+    liveProducts.find(p => p.sku === 'PDL-LOTION-PINK'),
+    liveProducts.find(p => p.sku === 'PDL-OIL-BROWN'),
+    liveProducts.find(p => p.sku === 'PDL-CREAM-GREEN'),
+    liveProducts.find(p => p.sku === 'PDL-OIL-SNOWWHITE'),
+  ].filter(Boolean) as Product[];
 
   const faqs = isFrench
     ? [
@@ -343,76 +303,68 @@ export const HomePage: React.FC<HomePageProps> = ({ setCurrentTab, onQuickView }
         </div>
       </section>
 
-      {/* 3. OUR COLLECTION (Inspired by Skin Cafe) */}
+      {/* 3. OUR BESTSELLERS / CURATED SELECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-[#A32B1E] block">
-            {isFrench ? 'LA COLLECTION' : 'OUR COLLECTION'}
+            {isFrench ? 'SÉLECTION ICONIQUE' : 'CURATED BESTSELLERS'}
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#251409] mt-1">
-            {t.shopSection.title}
+            {isFrench ? 'Nos Formulations Phares' : 'Our Iconic Formulations'}
           </h2>
           <p className="text-xs sm:text-sm text-[#6B5E51] mt-2">
-            {t.shopSection.subtitle}
+            {isFrench
+              ? 'Un aperçu de nos soins les plus plébiscités. Retrouvez l’intégralité de nos 17 formules au sein de la boutique officielle.'
+              : 'A refined preview of our most celebrated formulas. Explore all 17 clinical-grade essentials in our boutique catalog.'}
           </p>
-
-          {/* Color Line Filter Pills */}
-          <div className="flex items-center justify-center gap-2 mt-6 flex-wrap">
-            {filterTabs.map(tab => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveLine(tab.id)}
-                className={`text-xs font-semibold px-4 py-2 rounded-full transition-all cursor-pointer ${
-                  activeLine === tab.id
-                    ? 'bg-[#251409] text-white shadow-sm'
-                    : 'bg-white text-[#5A4D41] border border-[#E8DFC8] hover:border-[#251409]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Color-Line Grouped Catalog Display (All 17 Products) */}
-        <div className="space-y-14">
-          {productLines
-            .filter(line => activeLine === 'All' || activeLine === line.id)
-            .map(line => {
-              const lineProducts = liveProducts.filter(p => p.colorLine === line.id);
-              if (lineProducts.length === 0) return null;
+        {/* 4 Bestsellers Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredBestsellers.map(product => (
+            <ProductCard
+              key={product.sku}
+              product={product}
+              onQuickView={onQuickView}
+            />
+          ))}
+        </div>
 
-              return (
-                <div key={line.id} className="space-y-5">
-                  {/* Line Header Banner */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8DFC8]">
-                    <div className="flex items-center gap-3">
-                      <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#251409]">
-                        {line.name}
-                      </h3>
-                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border shadow-xs ${line.tagColor}`}>
-                        {line.badge}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#6B5E51] max-w-md leading-relaxed">
-                      {line.description}
-                    </p>
-                  </div>
-
-                  {/* Grid for this Line */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {lineProducts.map(product => (
-                      <ProductCard
-                        key={product.sku}
-                        product={product}
-                        onQuickView={onQuickView}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+        {/* Big Direct Call to Action to Shop Catalog */}
+        <div className="mt-12 text-center bg-[#FAF6F0] border border-[#E8DFC8] rounded-2xl p-8 sm:p-10">
+          <div className="max-w-xl mx-auto space-y-4">
+            <h3 className="font-serif text-2xl font-bold text-[#251409]">
+              {isFrench ? 'Prête à sublimer l’ensemble de votre routine ?' : 'Ready to customize your full routine?'}
+            </h3>
+            <p className="text-xs sm:text-sm text-[#6B5E51]">
+              {isFrench
+                ? 'Gammes Éclat Rose, Anti-Taches Marron, Hydratation Verte et Soins Spécifiques. Explorez le catalogue complet avec filtres et conseils d’experts.'
+                : 'Pink Glow, Brown Anti-Spots, Green Hydration, and Specialty treatments. Browse our full 17-piece catalog with filters.'}
+            </p>
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentTab('shop');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#251409] text-white text-xs sm:text-sm font-semibold hover:bg-[#A32B1E] transition-all shadow-sm cursor-pointer"
+              >
+                <span>{isFrench ? 'Explorer la Boutique Complète (17 Soins)' : 'Explore Full Boutique (17 Formulations)'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setCurrentTab('quiz');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-[#251409] border border-[#E8DFC8] text-xs sm:text-sm font-semibold hover:border-[#251409] transition-all shadow-xs cursor-pointer"
+              >
+                <span>{isFrench ? 'Faire le Diagnostic Routine' : 'Take the Routine Diagnostic'}</span>
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 

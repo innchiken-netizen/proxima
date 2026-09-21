@@ -93,16 +93,44 @@ export const RoutineQuiz: React.FC<RoutineQuizProps> = ({ onProductClick }) => {
     setIsCompleted(false);
   };
 
-  // Determine Recommended Products based on selections
-  const cleanseProduct = liveProducts.find(p => p.sku === 'PDL-GEL')!;
-  const treatProduct =
-    answers.concern === 'uneven' || answers.concern === 'dullness'
-      ? liveProducts.find(p => p.sku === 'PDL-SNOWOIL') || liveProducts.find(p => p.sku === 'PDL-HUILE')!
-      : liveProducts.find(p => p.sku === 'PDL-HUILE')!;
-  const moisturizeProduct =
-    answers.concern === 'texture' || answers.concern === 'maintenance'
-      ? liveProducts.find(p => p.sku === 'PDL-CREAM') || liveProducts.find(p => p.sku === 'PDL-LAIT')!
-      : liveProducts.find(p => p.sku === 'PDL-LAIT')!;
+  // Helper to safely find product by SKU with universal fallback
+  const getProduct = (sku: string): Product => {
+    return liveProducts.find(p => p.sku === sku) || liveProducts[0];
+  };
+
+  // Determine Recommended Products based on customer's concern, skin type and habit
+  let cleanseProduct: Product;
+  let treatProduct: Product;
+  let moisturizeProduct: Product;
+
+  if (answers.concern === 'uneven' || answers.concern === 'dullness') {
+    // Brown Clarifying Line (Alpha-Arbutin + Niacinamide) & Snow White Oil
+    cleanseProduct = answers.skinType === 'dry' 
+      ? getProduct('PDL-SOAP-MULATTO') 
+      : getProduct('PDL-GEL-BROWN');
+    treatProduct = answers.concern === 'uneven'
+      ? getProduct('PDL-OIL-SNOWWHITE')
+      : getProduct('PDL-OIL-BROWN');
+    moisturizeProduct = answers.routineHabit === 'advanced'
+      ? getProduct('PDL-SET-BROWN')
+      : (answers.skinType === 'dry' ? getProduct('PDL-LOTION-BROWN') : getProduct('PDL-CREAM-BROWN'));
+  } else if (answers.concern === 'texture' || answers.concern === 'bodycare') {
+    // Pink Smoothing Line (Retinol + Vitamin C)
+    cleanseProduct = getProduct('PDL-GEL-PINK');
+    treatProduct = getProduct('PDL-OIL-PINK');
+    moisturizeProduct = answers.routineHabit === 'advanced'
+      ? getProduct('PDL-SET-PINK')
+      : (answers.concern === 'bodycare' ? getProduct('PDL-LOTION-PINK') : getProduct('PDL-CREAM-PINK'));
+  } else {
+    // Green Hydrating / Barrier Line (Vitamin B3)
+    cleanseProduct = answers.skinType === 'dry'
+      ? getProduct('PDL-SOAP-MULATTO')
+      : getProduct('PDL-GEL-GREEN');
+    treatProduct = getProduct('PDL-OIL-GREEN');
+    moisturizeProduct = answers.routineHabit === 'advanced'
+      ? getProduct('PDL-SET-GREEN')
+      : (answers.skinType === 'dry' ? getProduct('PDL-LOTION-GREEN') : getProduct('PDL-CREAM-GREEN'));
+  }
 
   const recommendedRoutine = [
     {
@@ -148,9 +176,13 @@ export const RoutineQuiz: React.FC<RoutineQuizProps> = ({ onProductClick }) => {
   };
 
   const getWhatsAppRoutineUrl = () => {
+    const p1Name = isFrench ? cleanseProduct.frenchName : cleanseProduct.name;
+    const p2Name = isFrench ? treatProduct.frenchName : treatProduct.name;
+    const p3Name = isFrench ? moisturizeProduct.frenchName : moisturizeProduct.name;
+
     const message = isFrench
-      ? `Bonjour Proxima, j'ai complété le diagnostic 'Trouver Ma Routine' :\n- Objectif : ${answers.concern}\n- Type de peau : ${answers.skinType}\n- Rituel : ${answers.routineHabit}\n\nMon rituel conseillé :\n1. ${cleanseProduct.frenchName}\n2. ${treatProduct.frenchName}\n3. ${moisturizeProduct.frenchName}\n\nPouvez-vous me confirmer ces choix et le coût total de ₦${routineTotalNgn.toLocaleString()} ?`
-      : `Hello Proxima skincare team, I just completed the 'Find Your Routine' quiz on your website:\n- Focus: ${answers.concern}\n- Skin type: ${answers.skinType}\n- Habit: ${answers.routineHabit}\n\nRecommended bundle:\n1. ${cleanseProduct.name}\n2. ${treatProduct.name}\n3. ${moisturizeProduct.name}\n\nTotal: ₦${routineTotalNgn.toLocaleString()}. Can you confirm this routine for me?`;
+      ? `Bonjour Proxima, j'ai complété le diagnostic 'Trouver Ma Routine' :\n- Objectif : ${answers.concern}\n- Type de peau : ${answers.skinType}\n- Rituel : ${answers.routineHabit}\n\nMon rituel conseillé :\n1. ${p1Name} (${cleanseProduct.size})\n2. ${p2Name} (${treatProduct.size})\n3. ${p3Name} (${moisturizeProduct.size})\n\nPouvez-vous me confirmer ces choix et le coût total de ₦${routineTotalNgn.toLocaleString()} ?`
+      : `Hello Proxima skincare team, I just completed the 'Find Your Routine' quiz on your website:\n- Focus: ${answers.concern}\n- Skin type: ${answers.skinType}\n- Habit: ${answers.routineHabit}\n\nRecommended bundle:\n1. ${p1Name} (${cleanseProduct.size})\n2. ${p2Name} (${treatProduct.size})\n3. ${p3Name} (${moisturizeProduct.size})\n\nTotal: ₦${routineTotalNgn.toLocaleString()}. Can you confirm this routine for me?`;
 
     return `https://wa.me/2349044943580?text=${encodeURIComponent(message)}`;
   };

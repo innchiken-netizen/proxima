@@ -21,7 +21,7 @@ export const ingredients: ActiveIngredient[] = [
       en: 'Gentle enough for daily morning and evening use. Integrates smoothly before moisturizers or blended into body oils.',
       fr: 'Doux pour un usage biquotidien matin et soir. S’applique idéalement avant la crème ou en synergie dans une huile corporelle.',
     },
-    featuredInSkus: ['PDL-HUILE', 'PDL-SNOWOIL']
+    featuredInSkus: ['PDL-LOTION-BROWN', 'PDL-OIL-BROWN', 'PDL-CREAM-BROWN', 'PDL-LOTION-GREEN', 'PDL-CREAM-GREEN']
   },
   {
     id: 'alpha-arbutin',
@@ -43,7 +43,7 @@ export const ingredients: ActiveIngredient[] = [
       en: 'Apply to cleansed skin. Always protect with sunscreen during daytime exposure for optimal skin wellness.',
       fr: 'Appliquer sur peau propre. Toujours accompagner d’une protection solaire le jour pour préserver la netteté du teint.',
     },
-    featuredInSkus: ['PDL-SNOWOIL']
+    featuredInSkus: ['PDL-LOTION-BROWN', 'PDL-OIL-BROWN', 'PDL-CREAM-BROWN', 'PDL-OIL-SNOWWHITE']
   },
   {
     id: 'retinol',
@@ -65,7 +65,7 @@ export const ingredients: ActiveIngredient[] = [
       en: 'Best utilized in evening routines. Start with 2–3 applications per week, gradually increasing as tolerance builds.',
       fr: 'À privilégier lors du rituel du soir. Commencer par 2 à 3 applications par semaine pour laisser la peau s’habituer en douceur.',
     },
-    featuredInSkus: ['PDL-SNOWOIL', 'PDL-HUILE']
+    featuredInSkus: ['PDL-LOTION-PINK', 'PDL-OIL-PINK', 'PDL-CREAM-PINK']
   },
   {
     id: 'vitamin-c',
@@ -87,7 +87,7 @@ export const ingredients: ActiveIngredient[] = [
       en: 'Ideal for morning application beneath your daily lotion or face cream to shield your skin throughout the day.',
       fr: 'Parfait pour le rituel du matin, avant votre crème ou lotion protectrice.',
     },
-    featuredInSkus: ['PDL-SNOWOIL']
+    featuredInSkus: ['PDL-LOTION-PINK', 'PDL-OIL-PINK', 'PDL-CREAM-PINK']
   },
   {
     id: 'botanical-lipids',
@@ -109,6 +109,6 @@ export const ingredients: ActiveIngredient[] = [
       en: 'Massage generously onto clean damp skin immediately after bathing to lock in supreme hydration.',
       fr: 'Masser généreusement sur peau encore humide après le bain pour sceller l’hydratation.',
     },
-    featuredInSkus: ['PDL-GEL', 'PDL-LAIT', 'PDL-CREAM', 'PDL-HUILE']
+    featuredInSkus: ['PDL-OIL-PINK', 'PDL-OIL-BROWN', 'PDL-OIL-GREEN', 'PDL-SOAP-MULATTO']
   }
 ];
